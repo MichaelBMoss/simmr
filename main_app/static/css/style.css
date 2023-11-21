@@ -3,7 +3,7 @@
 /* Orange: #FFA629 */
 
 body {
-    font-family: 'Source Sans 3', sans-serif;
+    font-family: 'Source Sans 3','Helvetica', sans-serif;
     box-sizing: border-box;
     font-size: 14px;
 }
@@ -18,4 +18,17 @@ body {
     color: black !important;
     font-weight: 600;
     font-size: 1em;
+    transition: 0.15s;
+}
+
+.nav-link:hover {
+    color: #CF3A15 !important;
+}
+
+.card-footer {
+    border: none !important;
+    background-color: #CF3A15;
+    color: #fff !important;
+    text-align: right;
+    padding: 0.5em .8em;
 }
