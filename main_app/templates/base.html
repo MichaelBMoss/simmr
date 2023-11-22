@@ -33,10 +33,10 @@
                         <a class="nav-link" href="{% url 'about' %}">ABOUT</a>
                     </li>
                     <li class="nav-item mx-2">
-                        <a class="nav-link" href="#">ADD RECIPE</a>
+                        <a class="nav-link" href="{% url 'recipes_create %}">ADD RECIPE</a>
                     </li>
                     <li class="nav-item mx-2">
-                        <a class="nav-link" href="#">ALL RECIPE</a>
+                        <a class="nav-link" href="{% url 'recipes_list %}">ALL RECIPES</a>
                     </li>
                     {% if user.is_authenticated %}
                     <li class="nav-item mx-2">
