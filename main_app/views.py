@@ -32,9 +32,12 @@ def signup(request):
     context = { 'form': form, 'error_message': error_message }
     return render(request, 'registration/signup.html', context)
 
+class RecipeListView(ListView):
+    model = Recipe
+
 class RecipeCreateView(CreateView):
   model = Recipe
-  fields = ['name', 'description',]
+  fields = ['name', 'description', 'category', 'directions']
 
   def form_valid(self, form):
     form.instance.user = self.request.user
