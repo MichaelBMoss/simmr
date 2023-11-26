@@ -37,7 +37,7 @@ class RecipeListView(ListView):
 
 class RecipeCreateView(CreateView):
   model = Recipe
-  fields = ['name', 'category', 'description', 'directions',]
+  fields = ['name', 'category', 'description', 'time', 'servings', 'ingredients', 'directions',]
 
   def form_valid(self, form):
     form.instance.user = self.request.user
