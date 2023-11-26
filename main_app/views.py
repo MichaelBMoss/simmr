@@ -32,7 +32,10 @@ def signup(request):
     context = { 'form': form, 'error_message': error_message }
     return render(request, 'registration/signup.html', context)
 
-class RecipeListView(ListView):
+class RecipesListView(ListView):
+    model = Recipe
+
+class RecipeDetailView(DetailView):
     model = Recipe
 
 class RecipeCreateView(CreateView):
