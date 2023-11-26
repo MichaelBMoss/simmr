@@ -32,11 +32,6 @@ def signup(request):
     context = { 'form': form, 'error_message': error_message }
     return render(request, 'registration/signup.html', context)
 
-class RecipesListView(ListView):
-    model = Recipe
-
-class RecipeDetailView(DetailView):
-    model = Recipe
 
 class RecipeCreateView(CreateView):
   model = Recipe
@@ -45,3 +40,22 @@ class RecipeCreateView(CreateView):
   def form_valid(self, form):
     form.instance.user = self.request.user
     return super().form_valid(form)
+
+
+class RecipesListView(ListView):
+    model = Recipe
+
+
+class RecipeDetailView(DetailView):
+    model = Recipe
+
+
+class RecipeUpdateView(UpdateView):
+  model = Recipe
+  fields = ['name', 'category', 'description', 'time', 'servings', 'ingredients', 'directions',]
+
+
+class RecipeDeleteView(DeleteView):
+  model = Recipe
+#   delete should be updated to redirect to the users profile or the users list of authored recipes when posssible
+  success_url = 'recipes/list/'
