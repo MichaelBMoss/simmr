@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -42,6 +42,15 @@ def add_review(request, recipe_id):
       new_review.recipe_id = recipe_id
       new_review.save()
     return redirect('recipe_detail', pk=recipe_id)
+
+
+def delete_review(request, review_id):
+    review = get_object_or_404(Review, id=review_id)
+    if request.user == review.user:
+      if request.method == 'POST':
+         review.delete()
+         return redirect('recipe_detail', pk=review.recipe.id)
+    return redirect('recipe_detail', pk=review.recipe.id)
 
 
 class RecipeCreateView(CreateView):
