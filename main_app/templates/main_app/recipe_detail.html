@@ -23,4 +23,31 @@
     </div>
   </div>
 </div>
+
+<!-- REVIEWS -->
+<div>
+  <!-- review form -->
+  <form method="POST" action="{% url 'add_review' recipe.id %}">
+    {% csrf_token %}
+    {{ review_form.as_p }}
+    <button type="submit">Submit Review</button>
+  </form>
+</div>
+<div>
+</div>
+
+<!-- reviews listed -->
+<div>
+  {% if recipe.review_set.all %}
+  {% for review in recipe.review_set.all %}
+    <h4>{{ review.user }}</h4>
+    <p>{{ review.rating }}</p>
+    <p>{{ review.content }}</p>
+    {% endfor %}
+  {% else %}
+  <p>No reviews for this recipe yet</p>
+  {% endif %}
+</div>
+
+
 {% endblock %}

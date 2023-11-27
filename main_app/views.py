@@ -41,7 +41,7 @@ def add_review(request, recipe_id):
       new_review.user = request.user
       new_review.recipe_id = recipe_id
       new_review.save()
-    return redirect('detail', recipe_id=recipe_id)
+    return redirect('recipe_detail', pk=recipe_id)
 
 
 class RecipeCreateView(CreateView):
@@ -59,6 +59,11 @@ class RecipesListView(ListView):
 
 class RecipeDetailView(DetailView):
     model = Recipe
+    # template_name = 'recipe_detail.html'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['review_form'] = ReviewForm()
+        return context
 
 
 class RecipeUpdateView(UpdateView):
