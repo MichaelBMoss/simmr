@@ -58,4 +58,4 @@ class RecipeUpdateView(UpdateView):
 class RecipeDeleteView(DeleteView):
   model = Recipe
 #   delete should be updated to redirect to the users profile or the users list of authored recipes when posssible
-  success_url = 'recipes/list/'
+  success_url = '/recipes/list/'
