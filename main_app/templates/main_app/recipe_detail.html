@@ -11,15 +11,27 @@
         <p>Description: {{ recipe.description }}</p>
         <p>Time: {{ recipe.time }}</p>
         <p>Servings: {{ recipe.servings }}</p>
-        <p>Ingerdients: {{ recipe.ingredients }}</p>
+        <p>Ingredients: {{ recipe.ingredients }}</p>
         <p>Directions: {{ recipe.directions }}</p>
       </div>
-      {% if user.is_authenticated %}
-      <div class="card-action">
-        <a href="{% url 'recipes_update' recipe.id %}">Edit</a>
-        <a href="{% url 'recipes_delete' recipe.id %}">Delete</a>
+
+        {% if user.is_authenticated %}
+          <div class="card-action">
+              <a href="{% url 'recipes_update' recipe.id %}">Edit</a>
+              <a href="{% url 'recipes_delete' recipe.id %}">Delete</a>
+              <form method="post" action="{% url 'bookmark_recipe' recipe.id %}">
+                {% csrf_token %}
+                <button type="submit" class="btn waves-effect waves-light">
+                  {% if user in recipe.bookmarks.all %}
+                    Remove from Bookmarks
+                  {% else %}
+                    Add to Bookmarks
+                  {% endif %}
+                </button>
+              </form>
+          </div>
+        {% endif %}
       </div>
-      {% endif %}
     </div>
   </div>
 </div>

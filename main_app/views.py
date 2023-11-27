@@ -5,6 +5,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
 from .models import Recipe, Review
 from .forms import ReviewForm
+from django.contrib.auth.models import User
 
 # NOTE: For later when we need to implement authorization for specific actions 
 # from django.contrib.auth.decorators import login_required
@@ -53,12 +54,36 @@ def delete_review(request, review_id):
     return redirect('recipe_detail', pk=review.recipe.id)
 
 
+def profile(request, pk):
+    user = get_object_or_404(User, pk=pk)
+    authored_recipes = Recipe.objects.filter(author=user)
+    bookmarked_recipes = user.bookmarked_recipes.all()
+    return render(request, 'profile.html', {
+        'user': user,
+        'authored_recipes': authored_recipes,
+        'bookmarked_recipes': bookmarked_recipes
+    })
+
+
+def bookmark_recipe(request, recipe_id):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    recipe = get_object_or_404(Recipe, pk=recipe_id)
+    if request.user in recipe.bookmarks.all():
+        recipe.bookmarks.remove(request.user)
+    else:
+        recipe.bookmarks.add(request.user)
+    return redirect('recipe_detail', pk=recipe_id)
+
+
+
+
 class RecipeCreateView(CreateView):
   model = Recipe
   fields = ['name', 'category', 'description', 'time', 'servings', 'ingredients', 'directions',]
 
   def form_valid(self, form):
-    form.instance.user = self.request.user
+    form.instance.author = self.request.user
     return super().form_valid(form)
 
 
