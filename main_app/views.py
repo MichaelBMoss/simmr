@@ -121,6 +121,26 @@ class RecipeDeleteView(DeleteView):
   success_url = '/recipes/list/'
 
 
+
 def recipe_add_photo(request, recipe_id):
+    recipe = get_object_or_404(Recipe, pk=recipe_id)
+    
+    recipe.photo_set.all().delete()
+
+    photo_file = request.FILES.get('photo-file', None)
+    if photo_file:
+        s3 = boto3.client('s3')
+        key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+        try:
+            bucket = os.environ['S3_BUCKET']
+            s3.upload_fileobj(photo_file, bucket, key)
+            url = f"{os.environ['S3_BASE_URL']}{bucket}/{key}"
+            Photo.objects.create(url=url, recipe=recipe)
+        except Exception as e:
+            print('An error occurred uploading file to S3')
+            print(e)
+    
+    return redirect('recipe_detail', pk=recipe_id)
 
 
+   

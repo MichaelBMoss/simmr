@@ -1,7 +1,6 @@
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
-from django.contrib.auth.models import AbstractUser
 
 
 
@@ -44,8 +43,9 @@ class Review(models.Model):
 
     def __str__(self):
         return f'Review by {self.user.username}'
-   
+
 
 class Photo(models.Model):
     url = models.CharField(max_length=500)
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
+

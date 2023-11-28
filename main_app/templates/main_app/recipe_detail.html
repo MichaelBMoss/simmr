@@ -14,12 +14,29 @@
         <p>Ingredients: {{ recipe.ingredients }}</p>
         <p>Directions: {{ recipe.directions }}</p>
       </div>
+      <div class="recipe-photos">
+        <h2>Recipe Photos</h2>
+        {% for photo in recipe.photo_set.all %}
+            <img src="{{ photo.url }}" alt="Recipe Photo">
+        {% empty %}
+            <p>No photos available for this recipe.</p>
+        {% endfor %}
+    </div>
       {% if user.is_authenticated %}
         {% if user == recipe.author %}
             <div class="card-action">
                 <a href="{% url 'recipes_update' recipe.id %}">Edit</a>
                 <a href="{% url 'recipes_delete' recipe.id %}">Delete</a>
-                <a href="{% url 'recipe_add_photo' recipe.id %}">Add Photo</a>
+                <form action="{% url 'recipe_add_photo' recipe.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
+                    {% csrf_token %}
+                    <input type="file" name="photo-file">
+                    <br><br>
+                    {% if photo.url %}
+                    <button type="submit" class="btn">Upload Photo</button>
+                    {% else %}
+                    <button type="submit" class="btn">Replace Photo</button>
+                    {% endif %}
+                </form>
         {% endif %}
                 <form method="post" action="{% url 'bookmark_recipe' recipe.id %}">
                     {% csrf_token %}
