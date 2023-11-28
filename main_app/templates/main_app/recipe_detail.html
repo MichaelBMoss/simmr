@@ -1,13 +1,17 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>Recipe Details</h1>
+<h1>Recipe Details</h1>            
+{% if user.is_authenticated and user == recipe.author %}
+    <a href="{% url 'recipes_update' recipe.id %}">Edit</a>
+    <a href="{% url 'recipes_delete' recipe.id %}">Delete</a>
+{% endif %}
 
 <div class="row">
   <div class="col s6">
     <div class="card">
       <div class="card-content">
-        <span class="card-title">{{ recipe.name }}</span>
+        <h3 class="card-title">{{ recipe.name }}</h3>
         <p>Description: {{ recipe.description }}</p>
         <p>Time: {{ recipe.time }}</p>
         <p>Servings: {{ recipe.servings }}</p>
@@ -16,25 +20,23 @@
       </div>
       <div class="recipe-photos">
         <h2>Recipe Photos</h2>
-        {% for photo in recipe.photo_set.all %}
+        {% if photo %}
             <img src="{{ photo.url }}" alt="Recipe Photo">
-        {% empty %}
+        {% else %}
             <p>No photos available for this recipe.</p>
-        {% endfor %}
+        {% endif %}
     </div>
       {% if user.is_authenticated %}
         {% if user == recipe.author %}
             <div class="card-action">
-                <a href="{% url 'recipes_update' recipe.id %}">Edit</a>
-                <a href="{% url 'recipes_delete' recipe.id %}">Delete</a>
                 <form action="{% url 'recipe_add_photo' recipe.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
                     {% csrf_token %}
                     <input type="file" name="photo-file">
                     <br><br>
-                    {% if photo.url %}
-                    <button type="submit" class="btn">Upload Photo</button>
+                    {% if photo %}
+                        <button type="submit" class="btn">Replace Photo</button>
                     {% else %}
-                    <button type="submit" class="btn">Replace Photo</button>
+                        <button type="submit" class="btn">Upload Photo</button>
                     {% endif %}
                 </form>
         {% endif %}
@@ -44,7 +46,7 @@
                     {% if user in recipe.bookmarks.all %}
                         Remove from Bookmarks
                     {% else %}
-                        Add to Bookmarks
+                        Bookmark Recipe
                     {% endif %}
                     </button>
                 </form>

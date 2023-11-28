@@ -105,7 +105,11 @@ class RecipeDetailView(DetailView):
             recipe = self.get_object()
             has_reviewed = recipe.review_set.filter(user=user).exists()
             context['has_reviewed'] = has_reviewed
-        
+
+        # Get the associated photo for the recipe
+        photo = self.get_object().photo_set.first()
+        context['photo'] = photo  # This will either contain the photo data or be None
+
         return context
 
 
