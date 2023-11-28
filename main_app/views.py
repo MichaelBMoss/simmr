@@ -91,13 +91,23 @@ class RecipesListView(ListView):
     model = Recipe
 
 
+from django.views.generic.detail import DetailView
+
 class RecipeDetailView(DetailView):
     model = Recipe
-    # template_name = 'recipe_detail.html'
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['review_form'] = ReviewForm()
+
+        if self.request.user.is_authenticated:
+            user = self.request.user
+            recipe = self.get_object()
+            has_reviewed = recipe.review_set.filter(user=user).exists()
+            context['has_reviewed'] = has_reviewed
+        
         return context
+
 
 
 class RecipeUpdateView(UpdateView):

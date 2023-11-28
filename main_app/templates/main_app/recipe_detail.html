@@ -14,22 +14,23 @@
         <p>Ingredients: {{ recipe.ingredients }}</p>
         <p>Directions: {{ recipe.directions }}</p>
       </div>
-
-        {% if user.is_authenticated %}
-          <div class="card-action">
-              <a href="{% url 'recipes_update' recipe.id %}">Edit</a>
-              <a href="{% url 'recipes_delete' recipe.id %}">Delete</a>
-              <form method="post" action="{% url 'bookmark_recipe' recipe.id %}">
-                {% csrf_token %}
-                <button type="submit" class="btn waves-effect waves-light">
-                  {% if user in recipe.bookmarks.all %}
-                    Remove from Bookmarks
-                  {% else %}
-                    Add to Bookmarks
-                  {% endif %}
-                </button>
-              </form>
-          </div>
+      {% if user.is_authenticated %}
+        {% if user == recipe.author %}
+            <div class="card-action">
+                <a href="{% url 'recipes_update' recipe.id %}">Edit</a>
+                <a href="{% url 'recipes_delete' recipe.id %}">Delete</a>
+        {% endif %}
+                <form method="post" action="{% url 'bookmark_recipe' recipe.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn waves-effect waves-light">
+                    {% if user in recipe.bookmarks.all %}
+                        Remove from Bookmarks
+                    {% else %}
+                        Add to Bookmarks
+                    {% endif %}
+                    </button>
+                </form>
+            </div>
         {% endif %}
       </div>
     </div>
@@ -38,7 +39,7 @@
 
 <!-- REVIEWS -->
 <h2>Reviews</h2>
-{% if user.is_authenticated %}
+{% if user.is_authenticated and user != recipe.author and not has_reviewed %}
 <button>Add Review</button>
 <div>
   <!-- review form -->
