@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Avg, Count 
 from django.urls import reverse
 from django.contrib.auth.models import User
 
@@ -29,6 +30,12 @@ class Recipe(models.Model):
     ingredients = models.TextField(max_length=2000, null=True)
     directions = models.TextField(max_length=2000, null=True)
     bookmarks = models.ManyToManyField(User, related_name='bookmarked_recipes', blank=True)
+
+    def average_rating(self):
+       return self.review_set.aggregate(Avg('rating'))['rating__avg']
+    
+    def total_reviews(self):
+       return self.review_set.count()
 
     def __str__(self):
       return f'{self.name} ({self.id})'

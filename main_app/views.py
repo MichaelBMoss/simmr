@@ -1,8 +1,10 @@
+from typing import Any
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
+from django.db.models import Avg, Count
 from .models import Recipe, Review, Photo
 from .forms import ReviewForm
 from django.contrib.auth.models import User
@@ -95,26 +97,18 @@ class RecipeCreateView(CreateView):
 class RecipesListView(ListView):
     model = Recipe
 
-
-class RecipeDetailView(DetailView):
-    model = Recipe
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['review_form'] = ReviewForm()
-
-        if self.request.user.is_authenticated:
-            user = self.request.user
-            recipe = self.get_object()
-            has_reviewed = recipe.review_set.filter(user=user).exists()
-            context['has_reviewed'] = has_reviewed
-
-        # Get the associated photo for the recipe
-        photo = self.get_object().photo_set.first()
-        context['photo'] = photo  # This will either contain the photo data or be None
+        for recipe in Recipe.objects.all():
+            reviews_info = recipe.review_set.aggregate(avg_rating=Avg('rating'), total_reviews=Count('id'))
+            recipe.avg_rating = reviews_info['avg_rating']
+            recipe.total_reviews = reviews_info['total_reviews']
 
         return context
 
+
+class RecipeDetailView(DetailView):
+    model = Recipe
 
 
 class RecipeUpdateView(UpdateView):
