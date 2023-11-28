@@ -19,6 +19,7 @@
             <div class="card-action">
                 <a href="{% url 'recipes_update' recipe.id %}">Edit</a>
                 <a href="{% url 'recipes_delete' recipe.id %}">Delete</a>
+                <a href="{% url 'recipe_add_photo' recipe.id %}">Add Photo</a>
         {% endif %}
                 <form method="post" action="{% url 'bookmark_recipe' recipe.id %}">
                     {% csrf_token %}

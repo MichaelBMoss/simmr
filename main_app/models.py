@@ -30,22 +30,22 @@ class Recipe(models.Model):
 
 
 class Review(models.Model):
-   user = models.ForeignKey(User, on_delete=models.CASCADE)
-   content = models.TextField(max_length=2000)
-   RATING_CHOICES = [
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.TextField(max_length=2000)
+    RATING_CHOICES = [
       (1, '1'),
       (2, '2'),
       (3, '3'),
       (4, '4'),
       (5, '5'),
-   ]
-   rating = models.IntegerField(choices=RATING_CHOICES, default=5)
-   recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
+    ]
+    rating = models.IntegerField(choices=RATING_CHOICES, default=5)
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
 
-   def __str__(self):
-      return f'Review by {self.user.username}'
+    def __str__(self):
+        return f'Review by {self.user.username}'
    
 
-   class Photo(models.Model):
+class Photo(models.Model):
     url = models.CharField(max_length=500)
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)

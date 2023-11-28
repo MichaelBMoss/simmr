@@ -3,9 +3,12 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
-from .models import Recipe, Review
+from .models import Recipe, Review, Photo
 from .forms import ReviewForm
 from django.contrib.auth.models import User
+import uuid
+import boto3
+import os
 
 # NOTE: For later when we need to implement authorization for specific actions 
 # from django.contrib.auth.decorators import login_required
@@ -77,7 +80,6 @@ def bookmark_recipe(request, recipe_id):
 
 
 
-
 class RecipeCreateView(CreateView):
   model = Recipe
   fields = ['name', 'category', 'description', 'time', 'servings', 'ingredients', 'directions',]
@@ -90,8 +92,6 @@ class RecipeCreateView(CreateView):
 class RecipesListView(ListView):
     model = Recipe
 
-
-from django.views.generic.detail import DetailView
 
 class RecipeDetailView(DetailView):
     model = Recipe
@@ -119,4 +119,8 @@ class RecipeDeleteView(DeleteView):
   model = Recipe
 #   delete should be updated to redirect to the users profile or the users list of authored recipes when posssible
   success_url = '/recipes/list/'
+
+
+def recipe_add_photo(request, recipe_id):
+
 
