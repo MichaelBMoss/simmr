@@ -16,7 +16,11 @@
       <h4 class="card-title">{{ recipe.name }}</h4>
       <div>
         <img class="list-view-star" src="{% static 'main_app/images/star-red.png' %}" alt="rating-star">
-        <span class="list-view-rating"></span>
+        {% if recipe.total_reviews %}
+          <span class="list-view-rating">{{ recipe.average_rating|floatformat:1 }} ({{ recipe.total_reviews }})</span>
+        {% else %}
+          <span class="list-view-rating">No Reviews Yet</span>
+        {% endif %}
       </div>
     </div>
   </a>
