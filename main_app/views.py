@@ -3,9 +3,12 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
-from .models import Recipe, Review
+from .models import Recipe, Review, Photo
 from .forms import ReviewForm
 from django.contrib.auth.models import User
+import uuid
+import boto3
+import os
 
 # NOTE: For later when we need to implement authorization for specific actions 
 # from django.contrib.auth.decorators import login_required
@@ -77,7 +80,6 @@ def bookmark_recipe(request, recipe_id):
 
 
 
-
 class RecipeCreateView(CreateView):
   model = Recipe
   fields = ['name', 'category', 'appliance', 'description', 'time', 'servings', 'ingredients', 'directions',]
@@ -93,11 +95,23 @@ class RecipesListView(ListView):
 
 class RecipeDetailView(DetailView):
     model = Recipe
-    # template_name = 'recipe_detail.html'
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['review_form'] = ReviewForm()
+
+        if self.request.user.is_authenticated:
+            user = self.request.user
+            recipe = self.get_object()
+            has_reviewed = recipe.review_set.filter(user=user).exists()
+            context['has_reviewed'] = has_reviewed
+
+        # Get the associated photo for the recipe
+        photo = self.get_object().photo_set.first()
+        context['photo'] = photo  # This will either contain the photo data or be None
+
         return context
+
 
 
 class RecipeUpdateView(UpdateView):
@@ -110,3 +124,27 @@ class RecipeDeleteView(DeleteView):
 #   delete should be updated to redirect to the users profile or the users list of authored recipes when posssible
   success_url = '/recipes/list/'
 
+
+
+def recipe_add_photo(request, recipe_id):
+    recipe = get_object_or_404(Recipe, pk=recipe_id)
+    
+    recipe.photo_set.all().delete()
+
+    photo_file = request.FILES.get('photo-file', None)
+    if photo_file:
+        s3 = boto3.client('s3')
+        key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+        try:
+            bucket = os.environ['S3_BUCKET']
+            s3.upload_fileobj(photo_file, bucket, key)
+            url = f"{os.environ['S3_BASE_URL']}{bucket}/{key}"
+            Photo.objects.create(url=url, recipe=recipe)
+        except Exception as e:
+            print('An error occurred uploading file to S3')
+            print(e)
+    
+    return redirect('recipe_detail', pk=recipe_id)
+
+
+   
