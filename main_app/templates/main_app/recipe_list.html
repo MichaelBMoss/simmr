@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
 
 <header class="hero-index">
@@ -11,7 +11,13 @@
   {% for recipe in recipe_list %}
   <a class="recipe-card-link" href="{% url 'recipe_detail' recipe.id %}">
     <div class="card">
-      <span class="card-title">{{ recipe.name }}</span>
+      <div class="placeholder-image">Placeholder Image</div>
+      <span class="card-category">{{ recipe.category }}</span>
+      <h4 class="card-title">{{ recipe.name }}</h4>
+      <div>
+        <img class="list-view-star" src="{% static 'main_app/images/star-red.png' %}" alt="rating-star">
+        <span class="list-view-rating"></span>
+      </div>
     </div>
   </a>
   {% endfor %}
