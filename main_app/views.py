@@ -80,7 +80,7 @@ def bookmark_recipe(request, recipe_id):
 
 class RecipeCreateView(CreateView):
   model = Recipe
-  fields = ['name', 'category', 'description', 'time', 'servings', 'ingredients', 'directions',]
+  fields = ['name', 'category', 'appliance', 'description', 'time', 'servings', 'ingredients', 'directions',]
 
   def form_valid(self, form):
     form.instance.author = self.request.user
@@ -102,7 +102,7 @@ class RecipeDetailView(DetailView):
 
 class RecipeUpdateView(UpdateView):
   model = Recipe
-  fields = ['name', 'category', 'description', 'time', 'servings', 'ingredients', 'directions',]
+  fields = ['name', 'category', 'appliance', 'description', 'time', 'servings', 'ingredients', 'directions',]
 
 
 class RecipeDeleteView(DeleteView):
