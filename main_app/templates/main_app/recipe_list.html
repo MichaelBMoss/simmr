@@ -2,15 +2,19 @@
 
 {% block content %}
 
-{% for recipe in recipe_list %}
-  <a href="{% url 'recipe_detail' recipe.id %}">
+<header class="hero-index">
+  <h1>All Recipes</h1>
+</header>
+
+<div class="container">
+
+  {% for recipe in recipe_list %}
+  <a class="recipe-card-link" href="{% url 'recipe_detail' recipe.id %}">
     <div class="card">
-        <div class="card-content">
-            <span class="card-title">{{ recipe.name }}</span>
-            <p>Description: {{ recipe.description }}</p>
-        </div>
+      <span class="card-title">{{ recipe.name }}</span>
     </div>
   </a>
-{% endfor %}
+  {% endfor %}
 
+</div>
 {% endblock %}
