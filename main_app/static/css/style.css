@@ -8,12 +8,21 @@ body {
     font-size: 14px;
 }
 
+main {
+    width: 100%;
+}
+
+pre {
+    font-family: 'Inter', 'Helvetica', sans-serif;
+    text-wrap: wrap;
+}
+
 h1 {
     font-weight: 700;
     font-size: 48px;
 }
 
-h2 {
+h2, h3 {
     font-weight: 700;
 }
 
@@ -307,6 +316,20 @@ h4 {
     height: 90%;
     background-color: #CF3A15;
     z-index: -1;
+}
+
+.detail-info-container {
+    flex-direction: column;
+    gap: 50px;
+}
+
+.detail-info-container pre {
+    font-size: 1rem;
+    margin-left: 30px;
+}
+
+.reviews-main-container {
+    margin-top: 75px;
 }
 
 

@@ -44,15 +44,34 @@
 
 
 <!-- NOTE: This is the info container -->
-<div class="container">
-
+<div class="container detail-info-container">
+  <div>
+    <h3>Description</h3>
+    <p><pre>{{ recipe.description }}</pre></p>
+  </div>
+  <div>
+    <h3>Ingredients</h3>
+    <p><pre>{{ recipe.ingredients }}</pre></p>
+  </div>
+  <div>
+    <h3>Directions</h3>
+    <p><pre>{{ recipe.directions }}</pre></p>
+  </div>
 </div>
 
 <!-- NOTE: This is the reviews container -->
-<div class="container">
-
+<div class="container reviews-main-container">
+  <div><h3>Reviews</h3></div>
+  <div>
+    <form method="POST" action="{% url 'add_review' recipe.id %}">
+      {% csrf_token %}
+      {{ review_form.as_p }}
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+  <div></div>
 </div>
-
+<!-- 
 <div class="row">
   <div class="col s6">
     <div class="card">
@@ -101,7 +120,9 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
+
+<br><br><br><br><br>
 
 <!-- REVIEWS -->
 <h2>Reviews</h2>
@@ -138,3 +159,39 @@
 </div>
 
 {% endblock %}
+
+
+
+<div>
+  <form method="POST" action="/recipes/4/reviews/add/">
+    <input type="hidden" name="csrfmiddlewaretoken" value="PqUHkwye9mT5UzECW6mE8ukFEv1vXiILtwUEJlQ5cz1rqaaKxK24oXYpaUngtiiN">
+    <p>
+  <label for="id_content">Content:</label>
+  <textarea name="content" cols="40" rows="10" maxlength="2000" required="" id="id_content"></textarea>
+  
+  
+</p>
+
+
+<p>
+  <label for="id_rating">Rating:</label>
+  <select name="rating" id="id_rating">
+<option value="1">1</option>
+
+<option value="2">2</option>
+
+<option value="3">3</option>
+
+<option value="4">4</option>
+
+<option value="5" selected="">5</option>
+
+</select>
+  
+  
+    
+  
+</p>
+    <button type="submit">Submit</button>
+  </form>
+</div>
