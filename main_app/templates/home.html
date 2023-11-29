@@ -5,8 +5,8 @@
 
 <h1>Home</h1>
 
-<h2>Top-Rated Recipes</h2>
-<div class="container">
+<div class="container container-home">
+  <h2 class="container-title">Top-Rated Recipes</h2>
 
     {% for recipe in top_recipes  %}
     <div class="card">
@@ -28,8 +28,8 @@
   </div>
 
 
-<h2>Category: {{ category }}</h2>
-<div class="container">
+  <div class="container container-home">
+  <h2 class="container-title">Category: {{ category }}</h2>
 
     {% for recipe in category_recipes %}
     <div class="card">
@@ -50,8 +50,8 @@
     {% endfor %}
   </div>
 
-  <h2>Appliance: {{ appliance }}</h2>
-  <div class="container">
+  <div class="container container-home">
+    <h2 class="container-title">Appliance: {{ appliance }}</h2>
   
       {% for recipe in appliance_recipes %}
       <div class="card">
