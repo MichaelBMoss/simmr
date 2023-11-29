@@ -60,6 +60,17 @@ h4 {
     margin-bottom: 50px;
 }
 
+.hero-detail {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 75px; 
+    background-color: #FFA629;
+    color: white;
+    margin-bottom: 50px;
+}
+
 .hero-index {
     display: flex;
     justify-content: center;
@@ -147,10 +158,11 @@ h4 {
 }
 
 .card-category {
-    color: rgb(121, 121, 121);
+    color: rgb(102, 102, 102);
     text-transform: uppercase;
     font-size: 0.72rem;
     font-weight: 600;
+    letter-spacing: 1px;
 }
 
 .list-view-star {
@@ -168,6 +180,65 @@ h4 {
     margin-top: 5px;
 }
 
+.detail-left, .detail-right {
+    width: 50%;
+    display: flex;
+}
+
+.detail-left {
+    flex-direction: column;
+}
+
+.detail-category {
+    color: rgb(102, 102, 102);
+    text-transform: uppercase;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.detail-crud-buttons-container {
+    width: 35%;
+    display: flex;
+    justify-content: flex-start;
+    gap: 5%;
+}
+
+.detail-crud-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #FFA629;
+    color: white;
+    width: 75px;
+    height: 25px;
+    font-size: .7rem;
+    font-weight: 600;
+    padding: 5px 10px;
+    border-radius: 15px;
+    margin-right: 15px;
+}
+
+.detail-view-star {
+    height: 1rem;
+    margin-bottom: 2px;
+}
+
+.detail-view-rating {
+    margin-left: 5px;
+}
+
+.detail-author {
+    color: rgb(143, 143, 143);
+    font-weight: 500;
+}
+
+.detail-title {
+    margin: 0;
+    padding: 0;
+}
+
+
 
 
 
@@ -179,7 +250,7 @@ h4 {
 }
 
 @media (min-width: 768px) {
-    .container {
+    .container-home {
         gap: 5%;
     }
 

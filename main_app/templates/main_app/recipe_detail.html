@@ -1,11 +1,54 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
 
-<h1>Recipe Details</h1>            
-{% if user.is_authenticated and user == recipe.author %}
-    <a href="{% url 'recipes_update' recipe.id %}">Edit</a>
-    <a href="{% url 'recipes_delete' recipe.id %}">Delete</a>
-{% endif %}
+<header class="hero-detail">
+</header>
+
+
+<!-- NOTE: This is the hero container -->
+<div class="container">
+  <div class="flex-item detail-left">
+    <div>
+      <span class="detail-category">{{ recipe.category }}</span>
+      <span>{{ recipe.appliance }}</span>
+    </div>
+    <h2 class="detail-title">
+      {{ recipe.name }}
+    </h2>
+    <div class="detail-author">
+      Recipe by {{ recipe.author }}
+    </div>
+    <div class="rating">
+      <img class="detail-view-star" src="{% static 'main_app/images/star-red.png' %}" alt="rating-star">
+      {% if recipe.total_reviews %}
+      <span class="detail-view-rating">{{ recipe.average_rating|floatformat:1 }} ({{ recipe.total_reviews }})</span>
+      {% else %}
+      <span class="detail-view-rating">No Reviews Yet</span>
+      {% endif %}
+    </div>
+    <div class="detail-crud-buttons-container">
+      {% if user.is_authenticated and user == recipe.author %}
+          <a class="btn detail-crud-btn" href="{% url 'recipes_update' recipe.id %}">Edit</a>
+          <a class="btn detail-crud-btn" href="{% url 'recipes_delete' recipe.id %}">Delete</a>
+      {% endif %}
+    </div>
+  </div>
+  <div class="flex-item detail-right">
+    Photo with offset background
+  </div>
+</div>
+
+
+<!-- NOTE: This is the info container -->
+<div class="container">
+
+</div>
+
+<!-- NOTE: This is the reviews container -->
+<div class="container">
+
+</div>
 
 <div class="row">
   <div class="col s6">
