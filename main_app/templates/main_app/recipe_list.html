@@ -9,21 +9,22 @@
 <div class="container">
 
   {% for recipe in recipe_list %}
-  <a class="recipe-card-link" href="{% url 'recipe_detail' recipe.id %}">
-    <div class="card">
+  <div class="card">
+    <a class="recipe-card-link" href="{% url 'recipe_detail' recipe.id %}">
       <div class="placeholder-image">Placeholder Image</div>
+      <!-- <img class="list-view-image" src=""> -->
       <span class="card-category">{{ recipe.category }}</span>
       <h4 class="card-title">{{ recipe.name }}</h4>
-      <div>
+      <div class="rating">
         <img class="list-view-star" src="{% static 'main_app/images/star-red.png' %}" alt="rating-star">
         {% if recipe.total_reviews %}
-          <span class="list-view-rating">{{ recipe.average_rating|floatformat:1 }} ({{ recipe.total_reviews }})</span>
+        <span class="list-view-rating">{{ recipe.average_rating|floatformat:1 }} ({{ recipe.total_reviews }})</span>
         {% else %}
-          <span class="list-view-rating">No Reviews Yet</span>
+        <span class="list-view-rating">No Reviews Yet</span>
         {% endif %}
       </div>
-    </div>
-  </a>
+    </a>
+  </div>
   {% endfor %}
 
 </div>
