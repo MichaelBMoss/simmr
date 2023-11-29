@@ -59,7 +59,7 @@ h4 {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: flex-start;
 }
 
 .card {
@@ -132,6 +132,9 @@ h4 {
 }
 
 @media (min-width: 768px) {
+    .container {
+        gap: 5%;
+    }
 
     .card {
         width: 30%;
@@ -141,11 +144,13 @@ h4 {
 }
 
 @media (max-width: 767px){
-
-    
     .card {
-        margin-bottom: 20px;
+        margin-bottom: 30px;
         width: 100%;
+    }
+
+    .placeholder-image {
+        height: 300px;
     }
 }
 
