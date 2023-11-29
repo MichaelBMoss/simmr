@@ -116,6 +116,7 @@ h4 {
 .container-home {
     margin-bottom: 50px;
 }
+
 .container-title {
     width: 100%;
 }
@@ -250,7 +251,7 @@ h4 {
 }
 
 @media (min-width: 768px) {
-    .container-home {
+    .container-home, .container-index {
         gap: 5%;
     }
 
