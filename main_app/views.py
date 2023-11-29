@@ -6,7 +6,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
 from django.db.models import Avg, Count
 from .models import Recipe, Review, Photo
-from .forms import ReviewForm
+from .forms import ReviewForm, RecipeCreateForm
 from django.contrib.auth.models import User
 import uuid, boto3, os, random
 
@@ -36,8 +36,6 @@ def home(request):
     }
 
     return render(request, 'home.html', context)
-
-
 
 
 
@@ -103,12 +101,30 @@ def bookmark_recipe(request, recipe_id):
 
 
 class RecipeCreateView(CreateView):
-  model = Recipe
-  fields = ['name', 'category', 'appliance', 'description', 'time', 'servings', 'ingredients', 'directions',]
+    model = Recipe
+    form_class = RecipeCreateForm
 
-  def form_valid(self, form):
-    form.instance.author = self.request.user
-    return super().form_valid(form)
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+
+        recipe = form.save()
+
+        photo_file = self.request.FILES.get('photo', None)
+        if photo_file:
+
+            s3 = boto3.client('s3')
+            key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+            try:
+                bucket = os.environ['S3_BUCKET']
+                s3.upload_fileobj(photo_file, bucket, key)
+                url = f"{os.environ['S3_BASE_URL']}{bucket}/{key}"
+
+                Photo.objects.create(url=url, recipe=recipe)
+            except Exception as e:
+                print('An error occurred uploading file to S3')
+                print(e)
+
+        return super().form_valid(form)
 
 
 class RecipesListView(ListView):
@@ -158,20 +174,21 @@ class RecipeDeleteView(DeleteView):
 def recipe_add_photo(request, recipe_id):
     recipe = get_object_or_404(Recipe, pk=recipe_id)
     
-    recipe.photo_set.all().delete()
-
-    photo_file = request.FILES.get('photo-file', None)
-    if photo_file:
-        s3 = boto3.client('s3')
-        key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
-        try:
-            bucket = os.environ['S3_BUCKET']
-            s3.upload_fileobj(photo_file, bucket, key)
-            url = f"{os.environ['S3_BASE_URL']}{bucket}/{key}"
-            Photo.objects.create(url=url, recipe=recipe)
-        except Exception as e:
-            print('An error occurred uploading file to S3')
-            print(e)
+    if request.method == 'POST':
+        photo_file = request.FILES.get('photo-file', None)
+        if photo_file:
+            s3 = boto3.client('s3')
+            key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+            try:
+                bucket = os.environ['S3_BUCKET']
+                s3.upload_fileobj(photo_file, bucket, key)
+                url = f"{os.environ['S3_BASE_URL']}{bucket}/{key}"
+                # First, delete existing photos only if a new photo is successfully uploaded.
+                recipe.photo_set.all().delete()
+                Photo.objects.create(url=url, recipe=recipe)
+            except Exception as e:
+                print('An error occurred uploading file to S3')
+                print(e)
     
     return redirect('recipe_detail', pk=recipe_id)
 
