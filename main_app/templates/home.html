@@ -9,8 +9,8 @@
 <div class="container">
 
     {% for recipe in top_recipes  %}
-    <a class="recipe-card-link" href="{% url 'recipe_detail' recipe.id %}">
-      <div class="card">
+    <div class="card">
+        <a class="recipe-card-link" href="{% url 'recipe_detail' recipe.id %}">
         <div class="placeholder-image">Placeholder Image</div>
         <span class="card-category">{{ recipe.category }}</span>
         <h4 class="card-title">{{ recipe.name }}</h4>
@@ -22,8 +22,8 @@
             <span class="list-view-rating">No Reviews Yet</span>
           {% endif %}
         </div>
+      </a>
       </div>
-    </a>
     {% endfor %}
   </div>
 
@@ -32,8 +32,8 @@
 <div class="container">
 
     {% for recipe in category_recipes %}
-    <a class="recipe-card-link" href="{% url 'recipe_detail' recipe.id %}">
-      <div class="card">
+    <div class="card">
+        <a class="recipe-card-link" href="{% url 'recipe_detail' recipe.id %}">
         <div class="placeholder-image">Placeholder Image</div>
         <span class="card-category">{{ recipe.category }}</span>
         <h4 class="card-title">{{ recipe.name }}</h4>
@@ -45,8 +45,8 @@
             <span class="list-view-rating">No Reviews Yet</span>
           {% endif %}
         </div>
+      </a>
       </div>
-    </a>
     {% endfor %}
   </div>
 
@@ -54,8 +54,8 @@
   <div class="container">
   
       {% for recipe in appliance_recipes %}
-      <a class="recipe-card-link" href="{% url 'recipe_detail' recipe.id %}">
-        <div class="card">
+      <div class="card">
+          <a class="recipe-card-link" href="{% url 'recipe_detail' recipe.id %}">
           <div class="placeholder-image">Placeholder Image</div>
           <span class="card-category">{{ recipe.category }}</span>
           <h4 class="card-title">{{ recipe.name }}</h4>
@@ -67,8 +67,8 @@
               <span class="list-view-rating">No Reviews Yet</span>
             {% endif %}
           </div>
+        </a>
         </div>
-      </a>
       {% endfor %}
     </div>
 
