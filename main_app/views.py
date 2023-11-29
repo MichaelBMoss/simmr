@@ -22,7 +22,7 @@ def home(request):
     random_category = random.choice(Recipe.CATEGORY_CHOICES)
     category_recipes = Recipe.objects.filter(category=random_category[0]).order_by('?')[:3]
 
-    top_recipes = Recipe.objects.annotate(avg_rating=Avg('review__rating')).order_by('-avg_rating')[:3]
+    top_recipes = Recipe.objects.annotate(avg_rating=Avg('review__rating')).order_by('avg_rating')[:3]
 
     random_appliance = random.choice(Recipe.APPLIANCE_CHOICES)
     appliance_recipes = Recipe.objects.filter(appliance=random_appliance[0]).order_by('?')[:3]
