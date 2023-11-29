@@ -12,11 +12,11 @@
     <div class="card">
       <div class="card-content">
         <h3 class="card-title">{{ recipe.name }}</h3>
-        <p>Description: {{ recipe.description }}</p>
+        <p>Description: <pre>{{ recipe.description }}</pre></p>
         <p>Time: {{ recipe.time }}</p>
         <p>Servings: {{ recipe.servings }}</p>
-        <p>Ingredients: {{ recipe.ingredients }}</p>
-        <p>Directions: {{ recipe.directions }}</p>
+        <p>Ingredients: <pre>{{ recipe.ingredients }}</pre></p>
+        <p>Directions: <pre>{{ recipe.directions }}</pre></p>
       </div>
       <div class="recipe-photos">
         <h2>Recipe Photos</h2>
@@ -75,7 +75,7 @@
 <div>
   {% if recipe.review_set.all %}
     {% for review in recipe.review_set.all %}
-      <h4>{{ review.user }}</h4>
+      <h4><pre>{{ review.user }}</pre></h4>
       <p>{{ review.rating }}</p>
       <p>{{ review.content }}</p>
     {% if user.is_authenticated and user == review.user %}

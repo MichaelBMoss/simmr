@@ -16,7 +16,7 @@ class RecipeCreateForm(forms.ModelForm):
 
     name = forms.CharField(required=True)
     category = forms.ChoiceField(choices=Recipe.CATEGORY_CHOICES, required=True)
-    description = forms.CharField(required=True)
+    description = forms.CharField(required=True, widget=forms.Textarea)
     ingredients = forms.CharField(required=True, widget=forms.Textarea)
     directions = forms.CharField(required=True, widget=forms.Textarea)
     photo = forms.ImageField(required=True)
