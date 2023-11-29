@@ -8,17 +8,34 @@ from django.db.models import Avg, Count
 from .models import Recipe, Review, Photo
 from .forms import ReviewForm
 from django.contrib.auth.models import User
-import uuid
-import boto3
-import os
+import uuid, boto3, os, random
+
 
 # NOTE: For later when we need to implement authorization for specific actions 
 # from django.contrib.auth.decorators import login_required
 # from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
+
+
 def home(request):
-    return render(request, 'home.html')
+    random_category = random.choice(Recipe.CATEGORY_CHOICES)
+    category_recipes = Recipe.objects.filter(category=random_category[0]).order_by('?')[:3]
+
+    top_recipes = Recipe.objects.annotate(avg_rating=Avg('review__rating')).order_by('-avg_rating')[:3]
+
+    random_appliance = random.choice(Recipe.APPLIANCE_CHOICES)
+    appliance_recipes = Recipe.objects.filter(appliance=random_appliance[0]).order_by('?')[:3]
+
+    context = {
+        'category': random_category[0],
+        'category_recipes': category_recipes,
+        'top_recipes': top_recipes,
+        'appliance': random_appliance[0],
+        'appliance_recipes': appliance_recipes,
+    }
+
+    return render(request, 'home.html', context)
 
 
 
