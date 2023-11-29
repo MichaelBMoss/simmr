@@ -14,7 +14,7 @@
         <div class="placeholder-image">Placeholder Image</div>
         <span class="card-category">{{ recipe.category }}</span>
         <h4 class="card-title">{{ recipe.name }}</h4>
-        <div>
+        <div class="rating">
           <img class="list-view-star" src="{% static 'main_app/images/star-red.png' %}" alt="rating-star">
           {% if recipe.total_reviews %}
             <span class="list-view-rating">{{ recipe.average_rating|floatformat:1 }} ({{ recipe.total_reviews }})</span>
@@ -37,7 +37,7 @@
         <div class="placeholder-image">Placeholder Image</div>
         <span class="card-category">{{ recipe.category }}</span>
         <h4 class="card-title">{{ recipe.name }}</h4>
-        <div>
+        <div class="rating">
           <img class="list-view-star" src="{% static 'main_app/images/star-red.png' %}" alt="rating-star">
           {% if recipe.total_reviews %}
             <span class="list-view-rating">{{ recipe.average_rating|floatformat:1 }} ({{ recipe.total_reviews }})</span>
@@ -59,7 +59,7 @@
           <div class="placeholder-image">Placeholder Image</div>
           <span class="card-category">{{ recipe.category }}</span>
           <h4 class="card-title">{{ recipe.name }}</h4>
-          <div>
+          <div class="rating">
             <img class="list-view-star" src="{% static 'main_app/images/star-red.png' %}" alt="rating-star">
             {% if recipe.total_reviews %}
               <span class="list-view-rating">{{ recipe.average_rating|floatformat:1 }} ({{ recipe.total_reviews }})</span>
