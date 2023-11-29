@@ -65,7 +65,7 @@
   <div>
     <form method="POST" action="{% url 'add_review' recipe.id %}">
       {% csrf_token %}
-      {{ review_form.as_p }}
+      {{ review_form.as_div }}
       <button type="submit">Submit</button>
     </form>
   </div>
@@ -129,10 +129,10 @@
 {% if user.is_authenticated and user != recipe.author and not has_reviewed %}
 <button>Add Review</button>
 <div>
-  <!-- review form -->
-  <form method="POST" action="{% url 'add_review' recipe.id %}">
+  review form
+  <form class="review-form-container" method="POST" action="{% url 'add_review' recipe.id %}">
     {% csrf_token %}
-    {{ review_form.as_p }}
+    {{ review_form }}
     <button type="submit">Submit</button>
   </form>
 </div>
@@ -159,10 +159,34 @@
 </div>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    let ratingInputEl = document.getElementById('id_rating')
-  })
+  document.addEventListener('DOMContentLoaded', function() {
+    let labelContent = document.querySelector('label[for="id_content"]');
+    let labelRating = document.querySelector('label[for="id_rating"]');
+    if (labelContent) {
+      labelContent.classList.add('review-form-label');
+    }
+    if (labelRating) {
+      labelRating.classList.add('review-form-label');
+    }
+
+    let textareaContent = document.getElementById('id_content');
+    if (textareaContent) {
+      textareaContent.classList.add('review-form-textarea', 'mb-3');
+      textareaContent.rows = 5;
+    }
+
+    let selectRating = document.getElementById('id_rating');
+    if (selectRating) {
+      selectRating.classList.add('form-control', 'review-form-select');
+    }
+
+    let submitButton = document.querySelector('button[type="submit"]');
+    if (submitButton) {
+      submitButton.classList.add('btn', 'review-form-btn', 'mt-3');
+    }
+  });
 </script>
+
 
 {% endblock %}
 
