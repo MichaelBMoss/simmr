@@ -3,7 +3,7 @@
 /* Orange: #FFA629 */
 
 body {
-    font-family: 'Source Sans 3','Helvetica', sans-serif;
+    font-family: 'Inter','Helvetica', sans-serif;
     box-sizing: border-box;
     font-size: 14px;
 }
@@ -69,6 +69,13 @@ a {
     background-color: #CF3A15;
     width: 100%;
     height: 150px;
+}
+
+.card-category {
+    color: rgb(121, 121, 121);
+    text-transform: uppercase;
+    font-size: 0.72rem;
+    font-weight: 400;
 }
 
 .list-view-star {
