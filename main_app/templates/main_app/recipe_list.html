@@ -11,7 +11,7 @@
   {% for recipe in recipe_list %}
   <div class="card">
     <a class="recipe-card-link" href="{% url 'recipe_detail' recipe.id %}">
-      <div class="placeholder-image">Placeholder Image</div>
+      <div class="placeholder-image"></div>
       <!-- <img class="list-view-image" src=""> -->
       <span class="card-category">{{ recipe.category }}</span>
       <h4 class="card-title">{{ recipe.name }}</h4>

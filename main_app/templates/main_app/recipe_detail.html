@@ -158,11 +158,17 @@
   {% endif %}
 </div>
 
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    let ratingInputEl = document.getElementById('id_rating')
+  })
+</script>
+
 {% endblock %}
 
 
 
-<div>
+<!-- <div>
   <form method="POST" action="/recipes/4/reviews/add/">
     <input type="hidden" name="csrfmiddlewaretoken" value="PqUHkwye9mT5UzECW6mE8ukFEv1vXiILtwUEJlQ5cz1rqaaKxK24oXYpaUngtiiN">
     <p>
@@ -194,4 +200,4 @@
 </p>
     <button type="submit">Submit</button>
   </form>
-</div>
+</div> -->
