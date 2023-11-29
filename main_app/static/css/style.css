@@ -20,6 +20,15 @@ pre {
     text-wrap: wrap;
 }
 
+
+.visible {
+    display: contents;
+}
+
+.hidden {
+    display: none;
+}
+
 select.form-control {
     background-color: #CF3A15;
     color: white;
@@ -378,11 +387,20 @@ h4 {
 .reviews-main-container {
     margin-top: 75px;
     flex-direction: column;
+    position: relative;
 }
 
 .review-form-container {
     display: flex;
     flex-direction: column;
+}
+
+.add-review-btn {
+    width: fit-content;
+    position: absolute;
+    top: 0;
+    right: 5%;
+    margin: 10px;
 }
 
 

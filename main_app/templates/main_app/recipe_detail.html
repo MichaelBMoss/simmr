@@ -62,15 +62,30 @@
 <!-- NOTE: This is the reviews container -->
 <div class="container reviews-main-container">
   <div><h3>Reviews</h3></div>
-  <div>
+  {% if user.is_authenticated and user != recipe.author and not has_reviewed %}
+  <div><button class="btn add-review-btn">Add Review</button></div>
+  <div class="visible hidden">
     <form method="POST" action="{% url 'add_review' recipe.id %}">
       {% csrf_token %}
       {{ review_form.as_div }}
       <button type="submit">Submit</button>
     </form>
   </div>
+  {% endif %}
   <div></div>
 </div>
+
+
+
+<!-- <button>Add Review</button> -->
+<!-- <div> -->
+  <!-- review form -->
+  <!-- <form class="review-form-container" method="POST" action="{% url 'add_review' recipe.id %}"> -->
+    <!-- {% csrf_token %} -->
+    <!-- {{ review_form }} -->
+    <!-- <button type="submit">Submit</button> -->
+  <!-- </form> -->
+<!-- </div> -->
 <!-- 
 <div class="row">
   <div class="col s6">
@@ -125,18 +140,17 @@
 <br><br><br><br><br>
 
 <!-- REVIEWS -->
-<h2>Reviews</h2>
-{% if user.is_authenticated and user != recipe.author and not has_reviewed %}
-<button>Add Review</button>
-<div>
-  review form
-  <form class="review-form-container" method="POST" action="{% url 'add_review' recipe.id %}">
-    {% csrf_token %}
-    {{ review_form }}
-    <button type="submit">Submit</button>
-  </form>
-</div>
-{% endif %}
+<!-- <h2>Reviews</h2> -->
+<!-- {% if user.is_authenticated and user != recipe.author and not has_reviewed %} -->
+<!-- <button>Add Review</button> -->
+<!-- <div> -->
+  <!-- <form class="review-form-container" method="POST" action="{% url 'add_review' recipe.id %}"> -->
+    <!-- {% csrf_token %} -->
+    <!-- {{ review_form }} -->
+    <!-- <button type="submit">Submit</button> -->
+  <!-- </form> -->
+<!-- </div> -->
+<!-- {% endif %} -->
 
 <!-- reviews listed -->
 <div>
@@ -183,6 +197,18 @@
     let submitButton = document.querySelector('button[type="submit"]');
     if (submitButton) {
       submitButton.classList.add('btn', 'review-form-btn', 'mt-3');
+    }
+  });
+
+
+  document.addEventListener('DOMContentLoaded', function() {
+    let addReviewBtn = document.querySelector('.add-review-btn');
+    let hiddenReviewForm = document.querySelector('.hidden');
+
+    if (addReviewBtn && hiddenReviewForm) {
+      addReviewBtn.addEventListener('click', function() {
+        hiddenReviewForm.classList.toggle('hidden');
+      });
     }
   });
 </script>
