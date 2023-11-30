@@ -107,13 +107,23 @@ h4 {
     color: #CF3A15 !important;
 }
 
-
 .card-footer {
+    display: flex;
+    justify-content: space-between;
     border: none !important;
     background-color: #CF3A15;
     color: #fff !important;
     text-align: right;
-    padding: 0.5em .8em;
+    padding: 7px 25px;
+}
+
+.site-credits {
+    color: white;
+}
+
+.site-credits:hover {
+    color: white;
+    text-decoration: underline;
 }
 
 .hero-home {
