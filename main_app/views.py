@@ -8,12 +8,9 @@ from django.db.models import Avg, Count, Q
 from .models import Recipe, Review, Photo
 from .forms import ReviewForm, RecipeCreateForm, RecipeFilterForm, RecipeUpdateForm
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 import uuid, boto3, os, random
-
-
-# NOTE: For later when we need to implement authorization for specific actions 
-# from django.contrib.auth.decorators import login_required
-# from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 
@@ -61,7 +58,7 @@ def signup(request):
     context = { 'form': form, 'error_message': error_message }
     return render(request, 'registration/signup.html', context)
 
-
+@login_required
 def add_review(request, recipe_id):
     form = ReviewForm(request.POST)
     if form.is_valid():
@@ -86,6 +83,7 @@ def edit_review(request, recipe_id, review_id):
     return render(request, 'edit_review.html', {'form': form})
 
 
+@login_required
 def delete_review(request, review_id):
     review = get_object_or_404(Review, id=review_id)
     if request.user == review.user:
@@ -93,7 +91,7 @@ def delete_review(request, review_id):
          return redirect('recipe_detail', pk=review.recipe.id)
     return redirect('recipe_detail', pk=review.recipe.id)
 
-
+@login_required
 def profile(request, username):
     user = get_object_or_404(User, username=username)
     authored_recipes = Recipe.objects.filter(author=user)
@@ -104,7 +102,7 @@ def profile(request, username):
         'bookmarked_recipes': bookmarked_recipes
     })
 
-
+@login_required
 def bookmark_recipe(request, recipe_id):
     if not request.user.is_authenticated:
         return redirect('login')
@@ -116,7 +114,7 @@ def bookmark_recipe(request, recipe_id):
     return redirect('recipe_detail', pk=recipe_id)
 
 
-class RecipeCreateView(CreateView):
+class RecipeCreateView(LoginRequiredMixin, CreateView):
     model = Recipe
     form_class = RecipeCreateForm
 
@@ -143,7 +141,7 @@ class RecipeCreateView(CreateView):
         return super().form_valid(form)
 
 
-class RecipeUpdateView(UpdateView):
+class RecipeUpdateView(LoginRequiredMixin, UpdateView):
     model = Recipe
     form_class = RecipeUpdateForm
 
@@ -221,11 +219,11 @@ class RecipeDetailView(DetailView):
         return context
 
 
-class RecipeDeleteView(DeleteView):
+class RecipeDeleteView(LoginRequiredMixin, DeleteView):
   model = Recipe
   success_url = '/recipes/list/'
 
-
+@login_required
 def recipe_add_photo(request, recipe_id):
     recipe = get_object_or_404(Recipe, pk=recipe_id)
     
