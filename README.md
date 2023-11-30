@@ -32,6 +32,8 @@ At Simmr, our goal is to make the joy of cooking accessible to everyone. Through
 
 [Trello Board for Project Planning](https://trello.com/b/Ekzu1vwm/sei-recipesuserstories)
 
+![ERD](main_app/static/main_app/images/erd.png)
+![Wireframe](main_app/static/main_app/images/wireframe.png)
 
 ## Next Steps
 
