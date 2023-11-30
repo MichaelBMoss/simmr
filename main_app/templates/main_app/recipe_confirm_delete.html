@@ -1,14 +1,17 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Delete Recipe</h1>
 
-<h4>Are you sure you want to delete <span class="teal-text">{{ object.name }}</span>?</h4>
-<div class="container">
+<header class="hero-lg">
+  <h1>Delete Recipe</h1>
+</header>
+
+<div class="container flex-column">
+<h5>Are you sure you want to delete <span class="teal-text">{{ object.name }}</span>?</h5>
   <form action="" method="POST">
     {% csrf_token %}
-    <input type="submit" value="Yes - Delete!" class="btn">
-    <a href="{% url 'recipe_detail' recipe.id %}">Cancel</a>
+    <input type="submit" value="Yes - Delete!" class="btn mt-3">
+    <a class="btn btn-cancel mt-3" href="{% url 'recipe_detail' recipe.id %}">Cancel</a>
   </form>
 </div>
 

@@ -62,12 +62,24 @@ select.form-control:focus {
     transition: 0.2s;
 }
 
+.btn-cancel {
+    background-color: transparent;
+    color: #CF3A15;
+    border: 2px solid #CF3A15;
+    transition: 0.2s;
+}
+
 .btn-hero-btn {
     background-color: white;
 }
 
 .btn:hover {
     background-color: #ff9807;
+    color: white;
+}
+
+.btn-cancel:hover {
+    background-color: #CF3A15;
     color: white;
 }
 
