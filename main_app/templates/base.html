@@ -74,6 +74,15 @@
         <a class="site-credits" href="{% url 'about' %}">Site Credits</a>
         <span>All Rights Reserved, &copy; 2023 Simmr &nbsp;</span>
     </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+        if ('{{ request.resolver_match.url_name }}' == 'recipes_delete' || '{{ request.resolver_match.url_name }}' == 'profile') {
+            let footerEl = document.querySelector('footer')
+            footerEl.classList.add('fixed-bottom')
+        }
+    });
+        
+    </script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
