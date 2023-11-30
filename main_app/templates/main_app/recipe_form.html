@@ -2,19 +2,21 @@
 
 {% block content %}
 
-{% if object %}
-  <h1>Edit <span>{{ object.name }}</span></h1>
-{% else %}
-  <h1>Add Recipe</h1>
-{% endif %}
+<header class="hero-lg">
+  {% if object %}
+    <h1>Edit <span>{{ object.name }}</span></h1>
+  {% else %}
+    <h1>Add Recipe</h1>
+  {% endif %}
+</header>
+
 
 <form action="" method="POST" enctype="multipart/form-data">
-
   {% csrf_token %}
   <table>
     {{ form.as_table }}
   </table>
-  <input type="submit" value="Submit!" class="btn">
+  <button type="submit" class="btn">Submit</button>
 </form>
 <br><br>
 
