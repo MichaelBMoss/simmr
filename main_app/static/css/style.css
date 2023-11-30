@@ -163,6 +163,7 @@ h4 {
 
 .hero-btn:hover {
     background-color: rgb(236, 236, 236);
+    color: black;
 }
 
 .container {
