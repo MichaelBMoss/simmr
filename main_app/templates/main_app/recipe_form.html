@@ -14,7 +14,7 @@
   <form class="container flex-column" action="" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_div }}
-    <button type="submit" class="btn">Submit</button>
+    <button type="submit" class="btn add-edit-btn">Submit</button>
   </form>
 </div>
 
@@ -28,7 +28,7 @@
     
     let timeLabel = document.querySelector('label[for="id_time"]')
 
-    timeLabel.innerHTML = 'Time <em>(in minutes)</em>: {{ recipe.time }}'
+    timeLabel.innerHTML = 'Time <em>(in minutes)</em>:'
 
     let textareas = document.querySelectorAll('textarea')
 

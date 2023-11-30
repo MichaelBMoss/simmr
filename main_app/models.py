@@ -27,8 +27,8 @@ class Recipe(models.Model):
     description = models.TextField(max_length=2000, null=True)
     time = models.IntegerField(null=True)
     servings = models.IntegerField(null=True)
-    ingredients = models.TextField(max_length=2000, null=True)
-    directions = models.TextField(max_length=2000, null=True)
+    ingredients = models.TextField(max_length=3000, null=True)
+    directions = models.TextField(max_length=3000, null=True)
     bookmarks = models.ManyToManyField(User, related_name='bookmarked_recipes', blank=True)
 
     def average_rating(self):

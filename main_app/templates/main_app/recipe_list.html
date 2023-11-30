@@ -11,8 +11,9 @@
   {% for recipe in recipe_list %}
   <div class="card">
     <a class="recipe-card-link" href="{% url 'recipe_detail' recipe.id %}">
-      <div class="placeholder-image"></div>
-      <!-- <img class="list-view-image" src=""> -->
+      <div class="image-container">
+        <img id="image" class="list-view-image" src="{{ recipe.photo_set.first.url }}">
+      </div>
       <span class="card-category">{{ recipe.category }}</span>
       <h4 class="card-title">{{ recipe.name }}</h4>
       <div class="rating">
@@ -28,5 +29,24 @@
   {% endfor %}
 
 </div>
+
+<script>
+    let images = document.querySelectorAll('.list-view-image')
+
+    images.forEach(img => {
+      img.onload = function() {
+        const aspectRatio = img.width / img.height 
+        if (aspectRatio > 1.3) {
+          image.classList.add('detail-image-landscape')
+        } else {
+          image.classList.add('detail-image-portrait')
+        }
+      }
+
+      }
+    )
+
+
+</script>
 
 {% endblock %}
