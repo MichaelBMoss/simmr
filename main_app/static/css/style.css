@@ -359,9 +359,14 @@ h4 {
     justify-content: center;
 }
 
-.detail-image {
+.detail-image-portrait {
     width: 100%;
     object-fit: cover;
+}
+
+.detail-image-landscape {
+    height: 100%;
+    object-fit: fill;
 }
 
 .detail-image-offset-bkg {
