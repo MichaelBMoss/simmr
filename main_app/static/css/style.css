@@ -384,6 +384,13 @@ h4 {
     margin-left: 30px;
 }
 
+.time-serv-container {
+    width: 50%;
+    gap: 10%;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
 .reviews-main-container {
     margin-top: 75px;
     flex-direction: column;
