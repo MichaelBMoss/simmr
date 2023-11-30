@@ -1,9 +1,39 @@
 {% extends 'base.html' %}
 {% block content %}
-  <h2>Edit Review</h2>
-  <form method="post">
+
+<header class="hero-lg">
+  <h1>Edit Review</h1>
+</header>
+
+<div class="container">
+  <form class="container flex-column" method="post">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Save Changes</button>
+    {{ form.as_div }}
+    <button type="submit" class="btn">Save Changes</button>
   </form>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    let labels = document.querySelectorAll('label');
+    
+    labels.forEach(label => {
+      label.classList.add('create-edit-form-label')
+    });
+    
+    let textareas = document.querySelectorAll('textarea')
+
+    textareas.forEach(ta => {
+      ta.classList.add('add-edit-form-textarea', 'mb-4');
+      ta.rows = 5;
+    });
+
+    let selectEls = document.querySelectorAll('select')
+
+    selectEls.forEach(select => {
+      select.classList.add('form-control', 'mb-4')
+    })
+  });
+
+</script>
 {% endblock %}

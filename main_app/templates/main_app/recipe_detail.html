@@ -132,21 +132,23 @@
         {% endif %}
       </div>
       <p>{{ review.content }}</p>
-      {% if user.is_authenticated and user == review.user %}
-      <form method="POST" action="{% url 'edit_review' recipe.id review.id %}">
-        {% csrf_token %}
-        <button class="btn" type="submit">Edit</button>
-      </form>
-      <form method="POST" action="{% url 'delete_review' review.id %}">
-        {% csrf_token %}
-        <button class="btn" type="submit">Delete</button>
-      </form>
-      {% endif %}
-      <hr>
-      {% endfor %}
-      {% else %}
-      <p>No reviews for this recipe yet</p>
-      {% endif %}
+      <div class="container">
+        {% if user.is_authenticated and user == review.user %}
+        <form method="POST" action="{% url 'edit_review' recipe.id review.id %}">
+          {% csrf_token %}
+          <button class="btn" type="submit">Edit</button>
+        </form>
+        <form method="POST" action="{% url 'delete_review' review.id %}">
+          {% csrf_token %}
+          <button class="btn" type="submit">Delete</button>
+        </form>
+        {% endif %}
+        <hr>
+        {% endfor %}
+        {% else %}
+        <p>No reviews for this recipe yet</p>
+        {% endif %}
+      </div>
     </div>
   </div>
 </div>
@@ -156,8 +158,8 @@
 <script>
   let image = document.getElementById('food-photo')
 
-  image.onload = function() {
-    const aspectRatio = image.width / image.height 
+  image.onload = function () {
+    const aspectRatio = image.width / image.height
     if (aspectRatio > 1.3) {
       image.classList.add('detail-image-landscape')
     } else {
@@ -188,7 +190,7 @@
 
     let addReviewBtn = document.querySelector('.add-review-btn');
     let hiddenReviewForm = document.querySelector('.visible');
-  
+
     if (addReviewBtn && hiddenReviewForm) {
       addReviewBtn.addEventListener('click', function () {
         hiddenReviewForm.classList.toggle('hidden');
