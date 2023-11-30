@@ -23,14 +23,33 @@ class RecipeCreateForm(forms.ModelForm):
 
 
 class RecipeFilterForm(forms.Form):
-    CATEGORY_CHOICES = [('All', 'All')] + Recipe.CATEGORY_CHOICES
-    APPLIANCE_CHOICES = [('All', 'All')] + Recipe.APPLIANCE_CHOICES
+    CATEGORY_CHOICES = Recipe.CATEGORY_CHOICES
+    APPLIANCE_CHOICES = Recipe.APPLIANCE_CHOICES
 
-    combined_choices = CATEGORY_CHOICES + APPLIANCE_CHOICES
+    # Create choices with modified labels
+    combined_choices = [
+        ('Filter Options', [
+            ('All', 'All'),  # 'All' included within the "Filter Options" section
+        ]),
+        ('Filter By Category', [
+            ('Breakfast', 'Breakfast'),
+            ('Lunch', 'Lunch'),
+            ('Dinner', 'Dinner'),
+            ('Snack', 'Snack'),
+        ]),
+        ('Filter By Appliance', [
+            ('Air Fryer', 'Air Fryer'),
+            ('Microwave', 'Microwave'),
+            ('Oven', 'Oven'),
+            ('Pressure Cooker', 'Pressure Cooker'),
+            ('Slow Cooker', 'Slow Cooker'),
+            ('Stove', 'Stove'),
+        ]),
+    ]
 
     filter_choice = forms.ChoiceField(choices=combined_choices, required=False)
 
-    
+
 class RecipeUpdateForm(forms.ModelForm):
     class Meta:
         model = Recipe

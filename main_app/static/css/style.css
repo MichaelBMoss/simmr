@@ -9,8 +9,18 @@ body {
     font-size: 14px;
 }
 
+.filter-section {
+    font-weight: bold;
+    margin-left: -10px; /* Adjust the left margin as needed */
+}
+
+/* Style the individual options */
+select option {
+    margin-left: 20px; /* Adjust the left margin as needed */
+}
+
 #filter_form {
-    margin: 0px 0px 30px 230px;
+    margin: 0px 0px 30px 210px;
 }
 
 label[for=id_time] > em {

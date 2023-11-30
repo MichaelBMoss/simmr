@@ -17,16 +17,16 @@ import uuid, boto3, os, random
 
 # Create your views here.
 
+recipes_sorted_by_rating = Recipe.objects.annotate(avg_rating=Avg('review__rating')).order_by('-avg_rating')
+recipes_with_ratings = [recipe for recipe in recipes_sorted_by_rating if recipe.avg_rating is not None]
+recipes_without_ratings = [recipe for recipe in recipes_sorted_by_rating if recipe.avg_rating is None]
+combined_recipes = recipes_with_ratings + recipes_without_ratings
+top_recipes = combined_recipes[:3]
+
 
 def home(request):
     random_category = random.choice(Recipe.CATEGORY_CHOICES)
     category_recipes = Recipe.objects.filter(category=random_category[0]).order_by('?')[:3]
-
-    recipes_sorted_by_rating = Recipe.objects.annotate(avg_rating=Avg('review__rating')).order_by('-avg_rating')
-    recipes_with_ratings = [recipe for recipe in recipes_sorted_by_rating if recipe.avg_rating is not None]
-    recipes_without_ratings = [recipe for recipe in recipes_sorted_by_rating if recipe.avg_rating is None]
-    combined_recipes = recipes_with_ratings + recipes_without_ratings
-    top_recipes = combined_recipes[:3]
 
     random_appliance = random.choice(Recipe.APPLIANCE_CHOICES)
     appliance_recipes = Recipe.objects.filter(appliance=random_appliance[0]).order_by('?')[:3]

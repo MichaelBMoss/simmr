@@ -7,9 +7,23 @@
 </header>
 
 <form id="filter_form" method="get" action="">
-  {{ form.filter_choice.label_tag }} {{ form.filter_choice }}
+  {{ form.filter_choice.label_tag }} 
+  <select name="{{ form.filter_choice.name }}">
+      {% for choice in form.filter_choice.field.choices %}
+          {% if choice.0 == 'Filter Options' %}
+              <optgroup label="{{ choice.0 }}" class="filter-section">
+          {% else %}
+              <optgroup label="{{ choice.0 }}" class="filter-section">
+          {% endif %}
+          {% for subchoice in choice.1 %}
+              <option value="{{ subchoice.0 }}">{{ subchoice.1 }}</option>
+          {% endfor %}
+          </optgroup>
+      {% endfor %}
+  </select>
   <button type="submit">Filter</button>
 </form>
+
 
 <div class="container container-index">
 
