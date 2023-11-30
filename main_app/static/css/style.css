@@ -30,9 +30,11 @@ pre {
     display: contents;
 }
 
-.hidden {
+.hidden, .errorlist {
     display: none;
 }
+
+
 
 select.form-control {
     background-color: #CF3A15;
