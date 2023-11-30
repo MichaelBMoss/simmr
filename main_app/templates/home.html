@@ -12,68 +12,74 @@
 <div class="container container-home">
   <h2 class="container-title">Top-Rated Recipes</h2>
 
-    {% for recipe in top_recipes  %}
-    <div class="card">
-        <a class="recipe-card-link" href="{% url 'recipe_detail' recipe.id %}">
-        <div class="placeholder-image">Placeholder Image</div>
-        <span class="card-category">{{ recipe.category }}</span>
-        <h4 class="card-title">{{ recipe.name }}</h4>
-        <div class="rating">
-          <img class="list-view-star" src="{% static 'main_app/images/star-red.png' %}" alt="rating-star">
-          {% if recipe.total_reviews %}
-            <span class="list-view-rating">{{ recipe.average_rating|floatformat:1 }} ({{ recipe.total_reviews }})</span>
-          {% else %}
-            <span class="list-view-rating">No Reviews Yet</span>
-          {% endif %}
-        </div>
-      </a>
+  {% for recipe in top_recipes %}
+  <div class="card">
+    <a class="recipe-card-link" href="{% url 'recipe_detail' recipe.id %}">
+      <div class="image-container">
+        <img id="image" class="list-view-image" src="{{ recipe.photo_set.first.url }}">
       </div>
-    {% endfor %}
+      <span class="card-category">{{ recipe.category }}</span>
+      <h4 class="card-title">{{ recipe.name }}</h4>
+      <div class="rating">
+        <img class="list-view-star" src="{% static 'main_app/images/star-red.png' %}" alt="rating-star">
+        {% if recipe.total_reviews %}
+        <span class="list-view-rating">{{ recipe.average_rating|floatformat:1 }} ({{ recipe.total_reviews }})</span>
+        {% else %}
+        <span class="list-view-rating">No Reviews Yet</span>
+        {% endif %}
+      </div>
+    </a>
   </div>
+  {% endfor %}
+</div>
 
-  <div class="container container-home">
+<div class="container container-home">
   <h2 class="container-title">Category: {{ category }}</h2>
 
-    {% for recipe in category_recipes %}
-    <div class="card">
-        <a class="recipe-card-link" href="{% url 'recipe_detail' recipe.id %}">
-        <div class="placeholder-image">Placeholder Image</div>
-        <span class="card-category">{{ recipe.category }}</span>
-        <h4 class="card-title">{{ recipe.name }}</h4>
-        <div class="rating">
-          <img class="list-view-star" src="{% static 'main_app/images/star-red.png' %}" alt="rating-star">
-          {% if recipe.total_reviews %}
-            <span class="list-view-rating">{{ recipe.average_rating|floatformat:1 }} ({{ recipe.total_reviews }})</span>
-          {% else %}
-            <span class="list-view-rating">No Reviews Yet</span>
-          {% endif %}
-        </div>
-      </a>
+  {% for recipe in category_recipes %}
+  <div class="card">
+    <a class="recipe-card-link" href="{% url 'recipe_detail' recipe.id %}">
+      <div class="image-container">
+        <img id="image" class="list-view-image" src="{{ recipe.photo_set.first.url }}">
       </div>
-    {% endfor %}
+      <span class="card-category">{{ recipe.category }}</span>
+      <h4 class="card-title">{{ recipe.name }}</h4>
+      <div class="rating">
+        <img class="list-view-star" src="{% static 'main_app/images/star-red.png' %}" alt="rating-star">
+        {% if recipe.total_reviews %}
+        <span class="list-view-rating">{{ recipe.average_rating|floatformat:1 }} ({{ recipe.total_reviews }})</span>
+        {% else %}
+        <span class="list-view-rating">No Reviews Yet</span>
+        {% endif %}
+      </div>
+    </a>
   </div>
+  {% endfor %}
+</div>
 
-  <div class="container container-home">
-    <h2 class="container-title">Appliance: {{ appliance }}</h2>
-  
-      {% for recipe in appliance_recipes %}
-      <div class="card">
-          <a class="recipe-card-link" href="{% url 'recipe_detail' recipe.id %}">
-          <div class="placeholder-image">Placeholder Image</div>
-          <span class="card-category">{{ recipe.category }}</span>
-          <h4 class="card-title">{{ recipe.name }}</h4>
-          <div class="rating">
-            <img class="list-view-star" src="{% static 'main_app/images/star-red.png' %}" alt="rating-star">
-            {% if recipe.total_reviews %}
-              <span class="list-view-rating">{{ recipe.average_rating|floatformat:1 }} ({{ recipe.total_reviews }})</span>
-            {% else %}
-              <span class="list-view-rating">No Reviews Yet</span>
-            {% endif %}
-          </div>
-        </a>
-        </div>
-      {% endfor %}
-    </div>
+<div class="container container-home">
+  <h2 class="container-title">Appliance: {{ appliance }}</h2>
+
+  {% for recipe in appliance_recipes %}
+  <div class="card">
+    <a class="recipe-card-link" href="{% url 'recipe_detail' recipe.id %}">
+      <div class="image-container">
+        <img id="image" class="list-view-image" src="{{ recipe.photo_set.first.url }}">
+      </div>
+      <span class="card-category">{{ recipe.category }}</span>
+      <h4 class="card-title">{{ recipe.name }}</h4>
+      <div class="rating">
+        <img class="list-view-star" src="{% static 'main_app/images/star-red.png' %}" alt="rating-star">
+        {% if recipe.total_reviews %}
+        <span class="list-view-rating">{{ recipe.average_rating|floatformat:1 }} ({{ recipe.total_reviews }})</span>
+        {% else %}
+        <span class="list-view-rating">No Reviews Yet</span>
+        {% endif %}
+      </div>
+    </a>
+  </div>
+  {% endfor %}
+</div>
 
 
 {% endblock %}
