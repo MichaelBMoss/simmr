@@ -76,7 +76,7 @@
     </footer>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-        if ('{{ request.resolver_match.url_name }}' == 'recipes_delete' || '{{ request.resolver_match.url_name }}' == 'profile') {
+        if ('{{ request.resolver_match.url_name }}' == 'recipes_delete' || '{{ request.resolver_match.url_name }}' == 'profile' || '{{ request.resolver_match.url_name }}' == 'login' || '{{ request.resolver_match.url_name }}' == 'signup') {
             let footerEl = document.querySelector('footer')
             footerEl.classList.add('fixed-bottom')
         }
