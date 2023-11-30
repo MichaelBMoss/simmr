@@ -2,21 +2,59 @@
 
 {% block content %}
 
-{% if object %}
+<header class="hero-lg">
+  {% if object %}
   <h1>Edit <span>{{ object.name }}</span></h1>
-{% else %}
+  {% else %}
   <h1>Add Recipe</h1>
-{% endif %}
+  {% endif %}
+</header>
 
-<form action="" method="POST">
+<div class="container add-edit-recipe-form-container">
+  <form class="container flex-column" action="" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_div }}
+    <button type="submit" class="btn">Submit</button>
+  </form>
+</div>
 
-  {% csrf_token %}
-  <table>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    let labels = document.querySelectorAll('label');
+    
+    labels.forEach(label => {
+      label.classList.add('create-edit-form-label')
+    });
+    
+    let timeLabel = document.querySelector('label[for="id_time"]')
 
-    {{ form.as_table }}
-  </table>
-  <input type="submit" value="Submit!" class="btn">
-</form>
-<br><br>
+    timeLabel.innerHTML = 'Time <em>(in minutes)</em>: {{ recipe.time }}'
 
+    let textareas = document.querySelectorAll('textarea')
+
+    textareas.forEach(ta => {
+      ta.classList.add('add-edit-form-textarea', 'mb-4');
+      ta.rows = 5;
+    });
+
+    let selectEls = document.querySelectorAll('select')
+
+    selectEls.forEach(select => {
+      select.classList.add('form-control', 'mb-4')
+    })
+
+    let inputEls = document.querySelectorAll('input')
+
+    inputEls.forEach(input => {
+      input.classList.add('mb-4')
+    })
+
+    let submitButton = document.querySelector('button[type="submit"]');
+
+    if (submitButton) {
+      submitButton.classList.add('mt-3');
+    }
+  });
+
+</script>
 {% endblock %}

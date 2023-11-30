@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<header class="hero-profile">
+</header>
+
+<div class="container flex-column">
+<h1>{{ user.username }}'s Profile</h1>
+
+    <h2>Your Recipes</h2>
+    <ul>
+        {% for recipe in authored_recipes %}
+            <li>
+                <a href="{% url 'recipe_detail' recipe.pk %}">{{ recipe.name }}</a>
+            </li>
+        {% empty %}
+            <li>You haven't written any recipes yet.</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Bookmarked Recipes</h2>
+    <ul>
+        {% for recipe in bookmarked_recipes %}
+            <li>
+                <a href="{% url 'recipe_detail' recipe.pk %}">{{ recipe.name }}</a>
+            </li>
+        {% empty %}
+            <li>No bookmarked recipes yet.</li>
+        {% endfor %}
+    </ul>
+</div>
+
+{% endblock %}

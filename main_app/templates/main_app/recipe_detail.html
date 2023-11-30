@@ -1,61 +1,189 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
 
-<h1>Recipe Details</h1>
+<header class="hero-detail">
+</header>
 
-<div class="row">
-  <div class="col s6">
-    <div class="card">
-      <div class="card-content">
-        <span class="card-title">{{ recipe.name }}</span>
-        <p>Description: {{ recipe.description }}</p>
-        <p>Time: {{ recipe.time }}</p>
-        <p>Servings: {{ recipe.servings }}</p>
-        <p>Ingerdients: {{ recipe.ingredients }}</p>
-        <p>Directions: {{ recipe.directions }}</p>
+
+<!-- NOTE: This is the hero container -->
+<div class="container detail-main-container">
+  <div class="detail-left">
+    <div class="detail-cat-app">
+      <span class="detail-category">{{ recipe.category }}</span>
+      <span class="detail-appliance">{{ recipe.appliance }}</span>
+    </div>
+    <h2 class="detail-title">
+      {{ recipe.name }}
+    </h2>
+    <div class="detail-author">
+      Recipe by {{ recipe.author }}
+    </div>
+    <div class="detail-rating">
+      <img class="detail-view-star" src="{% static 'main_app/images/star-red.png' %}" alt="rating-star">
+      {% if recipe.total_reviews %}
+      <span class="detail-view-rating">{{ recipe.average_rating|floatformat:1 }} ({{ recipe.total_reviews }})</span>
+      {% else %}
+      <span class="detail-view-rating">No Reviews Yet</span>
+      {% endif %}
+    </div>
+    <div class="detail-crud-buttons-container">
+      {% if user.is_authenticated and user == recipe.author %}
+      <a class="btn detail-crud-btn" href="{% url 'recipes_update' recipe.id %}">Edit</a>
+      <a class="btn detail-crud-btn" href="{% url 'recipes_delete' recipe.id %}">Delete</a>
+      {% endif %}
+    </div>
+  </div>
+  <div class="detail-right">
+    <div class="detail-image-container">
+      <img class="detail-image" src="{% static 'main_app/images/corncass.jpg' %}" alt="photo">
+    </div>
+    <div class="detail-image-offset-bkg"></div>
+  </div>
+</div>
+
+<hr class="mb-3">
+
+<div class="container">
+  <form method="post" action="{% url 'bookmark_recipe' recipe.id %}">
+    {% csrf_token %}
+    <button type="submit" class="btn">
+      {% if user in recipe.bookmarks.all %}
+      Remove from Bookmarks
+      {% else %}
+      Bookmark Recipe
+      {% endif %}
+    </button>
+  </form>
+</div>
+
+<!-- NOTE: This is the info container -->
+<div class="container detail-info-container">
+  <div>
+    <h3>Description</h3>
+    <p>
+    <pre>{{ recipe.description }}</pre>
+    </p>
+  </div>
+  <div>
+    <h3>Ingredients</h3>
+    <p>
+    <pre>{{ recipe.ingredients }}</pre>
+    </p>
+  </div>
+  <div>
+    <h3>Directions</h3>
+    <p>
+    <pre>{{ recipe.directions }}</pre>
+    </p>
+  </div>
+</div>
+
+<!-- NOTE: This is the reviews container -->
+<div class="container reviews-main-container">
+  <div>
+    <h3>Reviews</h3>
+  </div>
+  {% if user.is_authenticated and user != recipe.author and not has_reviewed %}
+  <div><button class="btn add-review-btn">Add Review</button></div>
+  <div class="visible hidden">
+    <form method="POST" action="{% url 'add_review' recipe.id %}">
+      {% csrf_token %}
+      {{ review_form.as_div }}
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+  {% endif %}
+  <div class="reviews-list">
+    <div>
+      {% if recipe.review_set.all %}
+      {% for review in recipe.review_set.all %}
+      <h4 class="review-user">{{ review.user }}</h4>
+      <div class="my-1">
+        {% if review.rating == 5 %}
+        <img class="review-star" src="{% static 'main_app/images/star-red.png' %}" alt="rating-star">
+        <img class="review-star" src="{% static 'main_app/images/star-red.png' %}" alt="rating-star">
+        <img class="review-star" src="{% static 'main_app/images/star-red.png' %}" alt="rating-star">
+        <img class="review-star" src="{% static 'main_app/images/star-red.png' %}" alt="rating-star">
+        <img class="review-star" src="{% static 'main_app/images/star-red.png' %}" alt="rating-star">
+        {% elif review.rating == 4 %}
+        <img class="review-star" src="{% static 'main_app/images/star-red.png' %}" alt="rating-star">
+        <img class="review-star" src="{% static 'main_app/images/star-red.png' %}" alt="rating-star">
+        <img class="review-star" src="{% static 'main_app/images/star-red.png' %}" alt="rating-star">
+        <img class="review-star" src="{% static 'main_app/images/star-red.png' %}" alt="rating-star">
+        {% elif review.rating == 3 %}
+        <img class="review-star" src="{% static 'main_app/images/star-red.png' %}" alt="rating-star">
+        <img class="review-star" src="{% static 'main_app/images/star-red.png' %}" alt="rating-star">
+        <img class="review-star" src="{% static 'main_app/images/star-red.png' %}" alt="rating-star">
+        {% elif review.rating == 2 %}
+        <img class="review-star" src="{% static 'main_app/images/star-red.png' %}" alt="rating-star">
+        <img class="review-star" src="{% static 'main_app/images/star-red.png' %}" alt="rating-star">
+        {% else %}
+        <img class="review-star" src="{% static 'main_app/images/star-red.png' %}" alt="rating-star">
+        {% endif %}
       </div>
-      {% if user.is_authenticated %}
-      <div class="card-action">
-        <a href="{% url 'recipes_update' recipe.id %}">Edit</a>
-        <a href="{% url 'recipes_delete' recipe.id %}">Delete</a>
-      </div>
+      <p>{{ review.content }}</p>
+      {% if user.is_authenticated and user == review.user %}
+      <form method="POST" action="{% url 'edit_review' review.id %}">
+        {% csrf_token %}
+        <button class="btn" type="submit">Edit</button>
+      </form>
+      <form method="POST" action="{% url 'delete_review' review.id %}">
+        {% csrf_token %}
+        <button class="btn" type="submit">Delete</button>
+      </form>
+      {% endif %}
+      <hr>
+      {% endfor %}
+      {% else %}
+      <p>No reviews for this recipe yet</p>
       {% endif %}
     </div>
   </div>
 </div>
 
-<!-- REVIEWS -->
-<h2>Reviews</h2>
-{% if user.is_authenticated %}
-<button>Add Review</button>
-<div>
-  <!-- review form -->
-  <form method="POST" action="{% url 'add_review' recipe.id %}">
-    {% csrf_token %}
-    {{ review_form.as_p }}
-    <button type="submit">Submit</button>
-  </form>
-</div>
-{% endif %}
 
-<!-- reviews listed -->
-<div>
-  {% if recipe.review_set.all %}
-    {% for review in recipe.review_set.all %}
-      <h4>{{ review.user }}</h4>
-      <p>{{ review.rating }}</p>
-      <p>{{ review.content }}</p>
-    {% if user.is_authenticated and user == review.user %}
-      <form method="POST" action="{% url 'delete_review' review.id %}">
-        {% csrf_token %}
-        <button type="submit">Delete</button>
-      </form>
-    {% endif %}
-    <hr>
-    {% endfor %}
-  {% else %}
-  <p>No reviews for this recipe yet</p>
-  {% endif %}
-</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    let labelContent = document.querySelector('label[for="id_content"]');
+    let labelRating = document.querySelector('label[for="id_rating"]');
+    if (labelContent) {
+      labelContent.classList.add('review-form-label');
+    }
+    if (labelRating) {
+      labelRating.classList.add('review-form-label');
+    }
+
+    let textareaContent = document.getElementById('id_content');
+    if (textareaContent) {
+      textareaContent.classList.add('review-form-textarea', 'mb-3');
+      textareaContent.rows = 5;
+    }
+
+    let selectRating = document.getElementById('id_rating');
+    if (selectRating) {
+      selectRating.classList.add('form-control', 'review-form-select',);
+    }
+
+    let submitButton = document.querySelector('button[type="submit"]');
+    if (submitButton) {
+      submitButton.classList.add('btn', 'review-form-btn');
+    }
+  });
+
+
+  document.addEventListener('DOMContentLoaded', function () {
+    let addReviewBtn = document.querySelector('.add-review-btn');
+    let hiddenReviewForm = document.querySelector('.hidden');
+
+    if (addReviewBtn && hiddenReviewForm) {
+      addReviewBtn.addEventListener('click', function () {
+        hiddenReviewForm.classList.toggle('hidden');
+      });
+    }
+  });
+</script>
+
 
 {% endblock %}
