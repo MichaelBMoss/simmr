@@ -22,7 +22,11 @@ def home(request):
     random_category = random.choice(Recipe.CATEGORY_CHOICES)
     category_recipes = Recipe.objects.filter(category=random_category[0]).order_by('?')[:3]
 
-    top_recipes = Recipe.objects.annotate(avg_rating=Avg('review__rating')).order_by('avg_rating')[:3]
+    recipes_sorted_by_rating = Recipe.objects.annotate(avg_rating=Avg('review__rating')).order_by('-avg_rating')
+    recipes_with_ratings = [recipe for recipe in recipes_sorted_by_rating if recipe.avg_rating is not None]
+    recipes_without_ratings = [recipe for recipe in recipes_sorted_by_rating if recipe.avg_rating is None]
+    combined_recipes = recipes_with_ratings + recipes_without_ratings
+    top_recipes = combined_recipes[:3]
 
     random_appliance = random.choice(Recipe.APPLIANCE_CHOICES)
     appliance_recipes = Recipe.objects.filter(appliance=random_appliance[0]).order_by('?')[:3]
@@ -71,14 +75,13 @@ def add_review(request, recipe_id):
 def delete_review(request, review_id):
     review = get_object_or_404(Review, id=review_id)
     if request.user == review.user:
-      if request.method == 'POST':
          review.delete()
          return redirect('recipe_detail', pk=review.recipe.id)
     return redirect('recipe_detail', pk=review.recipe.id)
 
 
-def profile(request, pk):
-    user = get_object_or_404(User, pk=pk)
+def profile(request, username):
+    user = get_object_or_404(User, username=username)
     authored_recipes = Recipe.objects.filter(author=user)
     bookmarked_recipes = user.bookmarked_recipes.all()
     return render(request, 'profile.html', {
@@ -166,9 +169,7 @@ class RecipeUpdateView(UpdateView):
 
 class RecipeDeleteView(DeleteView):
   model = Recipe
-#   delete should be updated to redirect to the users profile or the users list of authored recipes when posssible
   success_url = '/recipes/list/'
-
 
 
 def recipe_add_photo(request, recipe_id):
