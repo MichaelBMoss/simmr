@@ -50,13 +50,13 @@ select.form-control:focus {
     transition: 0.2s;
 }
 
+.btn-hero-btn {
+    background-color: white;
+}
+
 .btn:hover {
     background-color: #ff9807;
     color: white;
-}
-
-select {
-    
 }
 
 h1 {

@@ -75,14 +75,13 @@ def add_review(request, recipe_id):
 def delete_review(request, review_id):
     review = get_object_or_404(Review, id=review_id)
     if request.user == review.user:
-      if request.method == 'POST':
          review.delete()
          return redirect('recipe_detail', pk=review.recipe.id)
     return redirect('recipe_detail', pk=review.recipe.id)
 
 
-def profile(request, pk):
-    user = get_object_or_404(User, pk=pk)
+def profile(request, username):
+    user = get_object_or_404(User, username=username)
     authored_recipes = Recipe.objects.filter(author=user)
     bookmarked_recipes = user.bookmarked_recipes.all()
     return render(request, 'profile.html', {
@@ -170,9 +169,7 @@ class RecipeUpdateView(UpdateView):
 
 class RecipeDeleteView(DeleteView):
   model = Recipe
-#   delete should be updated to redirect to the users profile or the users list of authored recipes when posssible
   success_url = '/recipes/list/'
-
 
 
 def recipe_add_photo(request, recipe_id):

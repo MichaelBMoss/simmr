@@ -17,7 +17,7 @@
       {{ recipe.name }}
     </h2>
     <div class="detail-author">
-      Recipe by {{ recipe.author }}
+      Recipe by <a href="{% url 'profile' recipe.author %}">{{ recipe.author }}</a>
     </div>
     <div class="detail-rating">
       <img class="detail-view-star" src="{% static 'main_app/images/star-red.png' %}" alt="rating-star">
@@ -146,10 +146,7 @@
       <p>{{ review.rating }}</p>
       <p>{{ review.content }}</p>
     {% if user.is_authenticated and user == review.user %}
-      <form method="POST" action="{% url 'delete_review' review.id %}">
-        {% csrf_token %}
-        <button type="submit">Delete</button>
-      </form>
+      <a href="{% url 'delete_review' review.id %}">Delete Review</a>
     {% endif %}
     <hr>
     {% endfor %}
