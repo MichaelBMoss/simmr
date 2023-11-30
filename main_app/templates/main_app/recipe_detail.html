@@ -60,8 +60,14 @@
 <!-- NOTE: This is the info container -->
 <div class="container detail-info-container">
   <div class="container time-serv-container">
-    <div>Time:</div>
-    <div>Servings: </div>
+    <div class="detail-time">
+      <h3 class="time-title">TIME <em>(in minutes)</em>:</h3>
+      <span class="number">{{ recipe.time }}</span>
+    </div>
+    <div class="detail-serv">
+      <h5 class="serv-title">SERVINGS:</h5>
+      <span class="number">{{ recipe.servings }}</span>
+    </div>
   </div>
   <div>
     <h3>Description</h3>

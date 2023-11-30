@@ -385,11 +385,27 @@ h4 {
 }
 
 .time-serv-container {
-    width: 50%;
     gap: 10%;
-    justify-content: flex-start;
-    align-items: flex-start;
 }
+
+.time-title, .serv-title {
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: rgb(171, 171, 171);
+}
+
+.number {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.detail-time, .detail-serv {
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    justify-content: flex-start;
+}
+
 
 .reviews-main-container {
     margin-top: 75px;
