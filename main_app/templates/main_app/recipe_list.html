@@ -42,11 +42,19 @@
           image.classList.add('detail-image-portrait')
         }
       }
-
       }
     )
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    const urlName = '{{ request.resolver_match.url_name }}';
+    const recipeListLength = '{{ recipe_list|length }}';
 
-
+    if (urlName === 'recipes_list' && recipeListLength < 4) {
+      let footerEl = document.querySelector('footer');
+      footerEl.classList.add('fixed-bottom');
+    }
+  });
 </script>
 
 
