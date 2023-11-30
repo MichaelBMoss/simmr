@@ -124,6 +124,10 @@
       </div>
       <p>{{ review.content }}</p>
       {% if user.is_authenticated and user == review.user %}
+      <form method="POST" action="{% url 'edit_review' review.id %}">
+        {% csrf_token %}
+        <button class="btn" type="submit">Edit</button>
+      </form>
       <form method="POST" action="{% url 'delete_review' review.id %}">
         {% csrf_token %}
         <button class="btn" type="submit">Delete</button>

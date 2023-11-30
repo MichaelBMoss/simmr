@@ -68,6 +68,20 @@ def add_review(request, recipe_id):
     return redirect('recipe_detail', pk=recipe_id)
 
 
+def edit_review(request, recipe_id, review_id):
+    review = get_object_or_404(Review, id=review_id)
+    if request.method == 'POST':
+        form = ReviewForm(request.POST, instance=review)
+        if form.is_valid():
+            form.save()
+            return redirect('recipe_detail', pk=review.recipe.id)
+    else:
+        form = ReviewForm(instance=review)
+
+    return render(request, 'edit_review.html', {'form': form, 'review_id': review_id})
+
+
+
 def delete_review(request, review_id):
     review = get_object_or_404(Review, id=review_id)
     if request.user == review.user:
