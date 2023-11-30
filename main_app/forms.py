@@ -20,3 +20,12 @@ class RecipeCreateForm(forms.ModelForm):
     ingredients = forms.CharField(required=True, widget=forms.Textarea)
     directions = forms.CharField(required=True, widget=forms.Textarea)
     photo = forms.ImageField(required=True)
+
+
+class RecipeFilterForm(forms.Form):
+    CATEGORY_CHOICES = [('All', 'All')] + Recipe.CATEGORY_CHOICES
+    APPLIANCE_CHOICES = [('All', 'All')] + Recipe.APPLIANCE_CHOICES
+
+    combined_choices = CATEGORY_CHOICES + APPLIANCE_CHOICES
+
+    filter_choice = forms.ChoiceField(choices=combined_choices, required=False)

@@ -6,6 +6,12 @@
   <h1>All Recipes</h1>
 </header>
 
+<div>
+  <form method="get" action="">
+    {{ form.filter_choice.label_tag }} {{ form.filter_choice }}
+    <button type="submit">Filter</button>
+  </form>
+</div>
 <div class="container">
 
   {% for recipe in recipe_list %}

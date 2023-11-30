@@ -4,9 +4,9 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
-from django.db.models import Avg, Count
+from django.db.models import Avg, Count, Q
 from .models import Recipe, Review, Photo
-from .forms import ReviewForm, RecipeCreateForm
+from .forms import ReviewForm, RecipeCreateForm, RecipeFilterForm
 from django.contrib.auth.models import User
 import uuid, boto3, os, random
 
@@ -129,13 +129,28 @@ class RecipeCreateView(CreateView):
 
 class RecipesListView(ListView):
     model = Recipe
+    template_name = 'your_template.html'
+    context_object_name = 'recipe_list'
+    form_class = RecipeFilterForm
+
+    def get_queryset(self):
+        filter_choice = self.request.GET.get('filter_choice')
+        queryset = Recipe.objects.all()
+        if filter_choice and filter_choice != 'All':
+            queryset = queryset.filter(
+                Q(category=filter_choice) | Q(appliance=filter_choice)
+            )
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        for recipe in Recipe.objects.all():
-            reviews_info = recipe.review_set.aggregate(avg_rating=Avg('rating'), total_reviews=Count('id'))
+        for recipe in context['recipe_list']:
+            reviews_info = recipe.review_set.aggregate(
+                avg_rating=Avg('rating'), total_reviews=Count('id')
+            )
             recipe.avg_rating = reviews_info['avg_rating']
             recipe.total_reviews = reviews_info['total_reviews']
+        context['form'] = self.form_class(self.request.GET)
 
         return context
 
