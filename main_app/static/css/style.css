@@ -18,7 +18,6 @@ textarea {
     width: 100%;
     border: solid rgb(203, 203, 203);
     border-radius: 5px;
-    height: fit-content;
 }
 
 pre {
@@ -310,13 +309,13 @@ h4 {
 }
 
 .detail-view-star {
-    height: 1.5rem;
+    height: 1.3rem;
     margin-bottom: 2px;
 }
 
 .detail-view-rating {
     margin-left: 5px;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
 }
 
 .detail-author {
@@ -571,7 +570,6 @@ input[type=text], input[type=number] {
 
     .hero-btn {
         font-size: .6rem;
-        width: fit-content;
     }
 
     .detail-main-container {
