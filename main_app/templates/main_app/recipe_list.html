@@ -8,7 +8,7 @@
 
 <div class="container">
   <form class="container justify-content-end sort-form" method="get" action="">
-    {{ form.filter_choice.label_tag }}
+    <div class="sort-form-label">Sort by:</div>
     <select class="form-control index-filter" name="{{ form.filter_choice.name }}">
       {% for choice in form.filter_choice.field.choices %}
       {% if choice.0 == 'Filter Options' %}
