@@ -5,11 +5,10 @@
 <header class="hero-detail">
 </header>
 
-
 <!-- NOTE: This is the hero container -->
 <div class="container detail-main-container">
   <div class="detail-left">
-    <div class="detail-cat-app">
+    <div class="detail-recipe-qualities-div">
       <span class="detail-category">{{ recipe.category }}</span>
       <span class="detail-appliance">{{ recipe.appliance }}</span>
     </div>
@@ -17,7 +16,7 @@
       {{ recipe.name }}
     </h2>
     <div class="detail-author">
-      Recipe by {{ recipe.author }}
+      Recipe by <a href="{% url 'profile' recipe.author %}">{{ recipe.author }}</a>
     </div>
     <div class="detail-rating">
       <img class="detail-view-star" src="{% static 'main_app/images/star-red.png' %}" alt="rating-star">
@@ -36,18 +35,18 @@
   </div>
   <div class="detail-right">
     <div class="detail-image-container">
-      <img class="detail-image" src="{% static 'main_app/images/corncass.jpg' %}" alt="photo">
+      <img id="food-photo" src="{{ recipe.photo_set.first.url }}" alt="photo">
     </div>
     <div class="detail-image-offset-bkg"></div>
   </div>
 </div>
 
-<hr class="mb-3">
+<hr class="mb-5">
 
 <div class="container">
   <form method="post" action="{% url 'bookmark_recipe' recipe.id %}">
     {% csrf_token %}
-    <button type="submit" class="btn">
+    <button type="submit" class="btn mb-5">
       {% if user in recipe.bookmarks.all %}
       Remove from Bookmarks
       {% else %}
@@ -59,6 +58,16 @@
 
 <!-- NOTE: This is the info container -->
 <div class="container detail-info-container">
+  <div class="container time-serv-container">
+    <div class="detail-time">
+      <h3 class="time-title">TIME <em>(in minutes)</em>:</h3>
+      <span class="number">{{ recipe.time }}</span>
+    </div>
+    <div class="detail-serv">
+      <h5 class="serv-title">SERVINGS:</h5>
+      <span class="number">{{ recipe.servings }}</span>
+    </div>
+  </div>
   <div>
     <h3>Description</h3>
     <p>
@@ -90,7 +99,7 @@
     <form method="POST" action="{% url 'add_review' recipe.id %}">
       {% csrf_token %}
       {{ review_form.as_div }}
-      <button type="submit">Submit</button>
+      <button class="btn review-form-btn" type="submit">Submit</button>
     </form>
   </div>
   {% endif %}
@@ -145,6 +154,17 @@
 
 
 <script>
+  let image = document.getElementById('food-photo')
+
+  image.onload = function() {
+    const aspectRatio = image.width / image.height 
+    if (aspectRatio > 1.3) {
+      image.classList.add('detail-image-landscape')
+    } else {
+      image.classList.add('detail-image-portrait')
+    }
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     let labelContent = document.querySelector('label[for="id_content"]');
     let labelRating = document.querySelector('label[for="id_rating"]');
@@ -166,17 +186,9 @@
       selectRating.classList.add('form-control', 'review-form-select',);
     }
 
-    let submitButton = document.querySelector('button[type="submit"]');
-    if (submitButton) {
-      submitButton.classList.add('btn', 'review-form-btn');
-    }
-  });
-
-
-  document.addEventListener('DOMContentLoaded', function () {
     let addReviewBtn = document.querySelector('.add-review-btn');
-    let hiddenReviewForm = document.querySelector('.hidden');
-
+    let hiddenReviewForm = document.querySelector('.visible');
+  
     if (addReviewBtn && hiddenReviewForm) {
       addReviewBtn.addEventListener('click', function () {
         hiddenReviewForm.classList.toggle('hidden');

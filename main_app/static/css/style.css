@@ -2,6 +2,7 @@
 /* Red: #CF3A15 */
 /* Orange: #FFA629 */
 
+
 body {
     font-family: 'Inter','Helvetica', sans-serif;
     box-sizing: border-box;
@@ -53,13 +54,17 @@ select.form-control:focus {
     background-color: #FFA629;
     color: white;
     width: fit-content;
-    height: 25px;
-    font-size: .7rem;
+    height: fit-content;
+    font-size: 1rem;
     font-weight: 600;
-    padding: 5px 10px;
-    border-radius: 15px;
+    padding: 5px 12px;
+    border-radius: 20px;
     margin-right: 15px;
     transition: 0.2s;
+}
+
+.btn-hero-btn {
+    background-color: white;
 }
 
 .btn:hover {
@@ -74,6 +79,10 @@ h1 {
 
 h2, h3 {
     font-weight: 700;
+}
+
+.about-h3 {
+    color: #CF3A15;
 }
 
 h4 {
@@ -163,6 +172,7 @@ h4 {
 
 .hero-btn:hover {
     background-color: rgb(236, 236, 236);
+    color: black;
 }
 
 .container {
@@ -336,7 +346,7 @@ h4 {
     padding: 7px 14px;
 }
 
-.detail-cat-app {
+.detail-recipe-qualities-div {
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -359,9 +369,14 @@ h4 {
     justify-content: center;
 }
 
-.detail-image {
+.detail-image-portrait {
     width: 100%;
     object-fit: cover;
+}
+
+.detail-image-landscape {
+    height: 100%;
+    object-fit: fill;
 }
 
 .detail-image-offset-bkg {
@@ -383,6 +398,29 @@ h4 {
     font-size: 1rem;
     margin-left: 30px;
 }
+
+.time-serv-container {
+    gap: 10%;
+}
+
+.time-title, .serv-title {
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: rgb(171, 171, 171);
+}
+
+.number {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.detail-time, .detail-serv {
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    justify-content: flex-start;
+}
+
 
 .reviews-main-container {
     margin-top: 75px;
@@ -416,7 +454,7 @@ h4 {
     margin-top: 10px;
 }
 
-.review-user {
+.review-user, .dev-name {
     text-decoration: underline #CF3A15;
 }
 
@@ -424,10 +462,25 @@ h4 {
     width: 100%;
 }
 
+.add-edit-btn {
+    width: 125px;
+    height: 30px;
+    font-size: 1rem;
+}
+
 input[type=text], input[type=number] {
     width: 100%;
     padding: 5px;
     border: solid rgb(203, 203, 203);
+}
+
+.linkedin {
+    color: inherit;
+    width: fit-content;
+}
+
+.linkedin:hover {
+    color: #FFA629;
 }
 
 
