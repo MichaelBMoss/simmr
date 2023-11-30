@@ -76,6 +76,10 @@ h2, h3 {
     font-weight: 700;
 }
 
+.about-h3 {
+    color: #CF3A15;
+}
+
 h4 {
     font-size: 1.5rem;
     font-weight: 700;
@@ -445,7 +449,7 @@ h4 {
     margin-top: 10px;
 }
 
-.review-user {
+.review-user, .dev-name {
     text-decoration: underline #CF3A15;
 }
 
@@ -463,6 +467,15 @@ input[type=text], input[type=number] {
     width: 100%;
     padding: 5px;
     border: solid rgb(203, 203, 203);
+}
+
+.linkedin {
+    color: inherit;
+    width: fit-content;
+}
+
+.linkedin:hover {
+    color: #FFA629;
 }
 
 
