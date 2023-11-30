@@ -18,7 +18,6 @@ textarea {
     width: 100%;
     border: solid rgb(203, 203, 203);
     border-radius: 5px;
-    height: fit-content;
 }
 
 pre {
@@ -63,12 +62,24 @@ select.form-control:focus {
     transition: 0.2s;
 }
 
+.btn-cancel {
+    background-color: transparent;
+    color: #CF3A15;
+    border: 2px solid #CF3A15;
+    transition: 0.2s;
+}
+
 .btn-hero-btn {
     background-color: white;
 }
 
 .btn:hover {
     background-color: #ff9807;
+    color: white;
+}
+
+.btn-cancel:hover {
+    background-color: #CF3A15;
     color: white;
 }
 
@@ -104,16 +115,27 @@ h4 {
     transition: 0.15s;
 }
 
-.nav-link:hover {
+.nav-link:hover, .nav-link.active {
     color: #CF3A15 !important;
 }
 
 .card-footer {
+    display: flex;
+    justify-content: space-between;
     border: none !important;
     background-color: #CF3A15;
     color: #fff !important;
     text-align: right;
-    padding: 0.5em .8em;
+    padding: 7px 25px;
+}
+
+.site-credits {
+    color: white;
+}
+
+.site-credits:hover {
+    color: white;
+    text-decoration: underline;
 }
 
 .hero-home {
@@ -310,13 +332,13 @@ h4 {
 }
 
 .detail-view-star {
-    height: 1.5rem;
+    height: 1.3rem;
     margin-bottom: 2px;
 }
 
 .detail-view-rating {
     margin-left: 5px;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
 }
 
 .detail-author {
@@ -468,7 +490,7 @@ h4 {
     font-size: 1rem;
 }
 
-input[type=text], input[type=number] {
+input[type=text], input[type=number], input[type=password] {
     width: 100%;
     padding: 5px;
     border: solid rgb(203, 203, 203);
@@ -571,7 +593,6 @@ input[type=text], input[type=number] {
 
     .hero-btn {
         font-size: .6rem;
-        width: fit-content;
     }
 
     .detail-main-container {
