@@ -22,7 +22,11 @@ def home(request):
     random_category = random.choice(Recipe.CATEGORY_CHOICES)
     category_recipes = Recipe.objects.filter(category=random_category[0]).order_by('?')[:3]
 
-    top_recipes = Recipe.objects.annotate(avg_rating=Avg('review__rating')).order_by('avg_rating')[:3]
+    recipes_sorted_by_rating = Recipe.objects.annotate(avg_rating=Avg('review__rating')).order_by('-avg_rating')
+    recipes_with_ratings = [recipe for recipe in recipes_sorted_by_rating if recipe.avg_rating is not None]
+    recipes_without_ratings = [recipe for recipe in recipes_sorted_by_rating if recipe.avg_rating is None]
+    combined_recipes = recipes_with_ratings + recipes_without_ratings
+    top_recipes = combined_recipes[:3]
 
     random_appliance = random.choice(Recipe.APPLIANCE_CHOICES)
     appliance_recipes = Recipe.objects.filter(appliance=random_appliance[0]).order_by('?')[:3]
@@ -71,14 +75,13 @@ def add_review(request, recipe_id):
 def delete_review(request, review_id):
     review = get_object_or_404(Review, id=review_id)
     if request.user == review.user:
-      if request.method == 'POST':
          review.delete()
          return redirect('recipe_detail', pk=review.recipe.id)
     return redirect('recipe_detail', pk=review.recipe.id)
 
 
-def profile(request, pk):
-    user = get_object_or_404(User, pk=pk)
+def profile(request, username):
+    user = get_object_or_404(User, username=username)
     authored_recipes = Recipe.objects.filter(author=user)
     bookmarked_recipes = user.bookmarked_recipes.all()
     return render(request, 'profile.html', {
@@ -97,7 +100,6 @@ def bookmark_recipe(request, recipe_id):
     else:
         recipe.bookmarks.add(request.user)
     return redirect('recipe_detail', pk=recipe_id)
-
 
 
 class RecipeCreateView(CreateView):
@@ -119,6 +121,32 @@ class RecipeCreateView(CreateView):
                 s3.upload_fileobj(photo_file, bucket, key)
                 url = f"{os.environ['S3_BASE_URL']}{bucket}/{key}"
 
+                Photo.objects.create(url=url, recipe=recipe)
+            except Exception as e:
+                print('An error occurred uploading file to S3')
+                print(e)
+
+        return super().form_valid(form)
+
+
+class RecipeUpdateView(UpdateView):
+    model = Recipe
+    form_class = RecipeUpdateForm
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        recipe = form.save()
+
+        photo_file = self.request.FILES.get('photo', None)
+        if photo_file:
+            s3 = boto3.client('s3')
+            key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+            try:
+                bucket = os.environ['S3_BUCKET']
+                s3.upload_fileobj(photo_file, bucket, key)
+                url = f"{os.environ['S3_BASE_URL']}{bucket}/{key}"
+                existing_photos = Photo.objects.filter(recipe=recipe)
+                existing_photos.delete()
                 Photo.objects.create(url=url, recipe=recipe)
             except Exception as e:
                 print('An error occurred uploading file to S3')
@@ -174,16 +202,9 @@ class RecipeDetailView(DetailView):
         return context
 
 
-class RecipeUpdateView(UpdateView):
-  model = Recipe
-  fields = ['name', 'category', 'appliance', 'description', 'time', 'servings', 'ingredients', 'directions',]
-
-
 class RecipeDeleteView(DeleteView):
   model = Recipe
-#   delete should be updated to redirect to the users profile or the users list of authored recipes when posssible
   success_url = '/recipes/list/'
-
 
 
 def recipe_add_photo(request, recipe_id):

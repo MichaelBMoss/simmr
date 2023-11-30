@@ -1,7 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<header class="hero-profile">
+</header>
 
+<div class="container flex-column">
 <h1>{{ user.username }}'s Profile</h1>
 
     <h2>Your Recipes</h2>
@@ -25,6 +28,6 @@
             <li>No bookmarked recipes yet.</li>
         {% endfor %}
     </ul>
-
+</div>
 
 {% endblock %}

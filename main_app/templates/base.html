@@ -41,7 +41,7 @@
                     </li>
                     {% if user.is_authenticated %}
                     <li class="nav-item mx-2">
-                        <a class="nav-link" href="{% url 'profile' user.pk %}">MY PROFILE</a>
+                        <a class="nav-link" href="{% url 'profile' user.username %}">MY PROFILE</a>
                     </li>
                     <li class="nav-item mx-2">
                         <a class="nav-link" href="{% url 'logout' %}">LOG OUT</a>
@@ -63,7 +63,7 @@
         {% endblock %}
     </main>
     <br><br><br>
-    <footer class="card-footer fixed-bottom text-muted">
+    <footer class="card-footer text-muted">
         <div>All Rights Reserved, &copy; 2023 Simmr &nbsp;</div>
     </footer>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
