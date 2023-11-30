@@ -6,7 +6,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
 from django.db.models import Avg, Count, Q
 from .models import Recipe, Review, Photo
-from .forms import ReviewForm, RecipeCreateForm, RecipeFilterForm
+from .forms import ReviewForm, RecipeCreateForm, RecipeFilterForm, RecipeUpdateForm
 from django.contrib.auth.models import User
 import uuid, boto3, os, random
 

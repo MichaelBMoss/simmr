@@ -9,6 +9,10 @@ body {
     font-size: 14px;
 }
 
+#filter_form {
+    margin: 0px 0px 30px 230px;
+}
+
 label[for=id_time] > em {
     font-size: 0.8rem;
     font-weight: 400;
@@ -595,3 +599,4 @@ input[type=text], input[type=number] {
         width: 100%;
     }
 }
+
