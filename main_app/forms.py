@@ -30,6 +30,7 @@ class RecipeFilterForm(forms.Form):
     combined_choices = [
         ('Filter Options', [
             ('All', 'All'),  # 'All' included within the "Filter Options" section
+            ('ByRating', 'By Rating'),
         ]),
         ('Filter By Category', [
             ('Breakfast', 'Breakfast'),

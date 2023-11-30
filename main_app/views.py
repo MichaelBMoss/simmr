@@ -20,8 +20,8 @@ import uuid, boto3, os, random
 recipes_sorted_by_rating = Recipe.objects.annotate(avg_rating=Avg('review__rating')).order_by('-avg_rating')
 recipes_with_ratings = [recipe for recipe in recipes_sorted_by_rating if recipe.avg_rating is not None]
 recipes_without_ratings = [recipe for recipe in recipes_sorted_by_rating if recipe.avg_rating is None]
-combined_recipes = recipes_with_ratings + recipes_without_ratings
-top_recipes = combined_recipes[:3]
+all_recipes_by_rating = recipes_with_ratings + recipes_without_ratings
+top_recipes = all_recipes_by_rating[:3]
 
 
 def home(request):
@@ -157,17 +157,22 @@ class RecipeUpdateView(UpdateView):
 
 class RecipesListView(ListView):
     model = Recipe
-    template_name = 'your_template.html'
+    template_name = 'main_app/recipe_list.html'
     context_object_name = 'recipe_list'
     form_class = RecipeFilterForm
 
     def get_queryset(self):
         filter_choice = self.request.GET.get('filter_choice')
         queryset = Recipe.objects.all()
-        if filter_choice and filter_choice != 'All':
+
+        if filter_choice == 'ByRating':
+            # If the user selects "By Rating," return the top_recipes queryset
+            return all_recipes_by_rating
+        elif filter_choice and filter_choice != 'All':
             queryset = queryset.filter(
                 Q(category=filter_choice) | Q(appliance=filter_choice)
             )
+
         return queryset
 
     def get_context_data(self, **kwargs):
