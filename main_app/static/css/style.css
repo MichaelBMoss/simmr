@@ -2,6 +2,7 @@
 /* Red: #CF3A15 */
 /* Orange: #FFA629 */
 
+
 body {
     font-family: 'Inter','Helvetica', sans-serif;
     box-sizing: border-box;
@@ -321,7 +322,6 @@ h4 {
     justify-content: center;
     align-items: center;
     height: 30px;
-    width: 75px;
     font-size: 0.8rem;
     font-weight: 700;
     padding: 7px 14px;
@@ -385,6 +385,17 @@ h4 {
     flex-direction: column;
 }
 
+#id_rating + label {
+    display: inline;
+}
+
+#id_rating {     
+    display: inline;
+    margin-left: 3px;
+    width: 50px;
+    height: 25px;
+    padding: 0px 0px 0px 10px;
+}
 
 @media (min-width: 992px) {
     .card {
