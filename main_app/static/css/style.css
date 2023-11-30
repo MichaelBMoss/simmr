@@ -8,9 +8,14 @@ body {
     font-size: 14px;
 }
 
+label[for=id_time] > em {
+    font-size: 0.8rem;
+    font-weight: 400;
+}
+
 textarea {
     width: 100%;
-    border: 3px solid rgb(203, 203, 203);
+    border: solid rgb(203, 203, 203);
     border-radius: 5px;
     height: fit-content;
 }
@@ -390,7 +395,7 @@ h4 {
     flex-direction: column;
 }
 
-.review-form-label {
+.review-form-label, .create-edit-form-label {
     font-size: 1rem;
     font-weight: 700;
 }
@@ -415,9 +420,15 @@ h4 {
     text-decoration: underline #CF3A15;
 }
 
-/* .review-star {
-    height: 1rem;
-} */
+.add-edit-recipe-form-container {
+    width: 100%;
+}
+
+input[type=text], input[type=number] {
+    width: 100%;
+    padding: 5px;
+    border: solid rgb(203, 203, 203);
+}
 
 
 @media (min-width: 992px) {
