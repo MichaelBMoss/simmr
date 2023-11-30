@@ -82,7 +82,7 @@ def edit_review(request, recipe_id, review_id):
     else:
         form = ReviewForm(instance=review)
 
-    return render(request, 'edit_review.html', {'form': form, 'review_id': review_id})
+    return render(request, 'main_app/recipe_detail.html', {'form': form, 'review_id': review_id})
 
 
 

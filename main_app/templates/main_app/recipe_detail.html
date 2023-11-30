@@ -133,7 +133,7 @@
       </div>
       <p>{{ review.content }}</p>
       {% if user.is_authenticated and user == review.user %}
-      <form method="POST" action="{% url 'edit_review' review.id %}">
+      <form method="POST" action="{% url 'edit_review' recipe.id review.id %}">
         {% csrf_token %}
         <button class="btn" type="submit">Edit</button>
       </form>
