@@ -47,7 +47,7 @@ select.form-control:focus {
     align-items: center;
     background-color: #FFA629;
     color: white;
-    width: 75px;
+    width: fit-content;
     height: 25px;
     font-size: .7rem;
     font-weight: 600;
