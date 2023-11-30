@@ -74,6 +74,14 @@
         <a class="site-credits" href="{% url 'about' %}">Site Credits</a>
         <span>All Rights Reserved, &copy; 2023 Simmr &nbsp;</span>
     </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log('{{ top_recipes }}')
+            console.log('{{ category_recipes }}')
+            console.log('{{ appliance_recipes }}')
+        })
+    </script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
         if ('{{ request.resolver_match.url_name }}' == 'recipes_delete' || '{{ request.resolver_match.url_name }}' == 'profile' || '{{ request.resolver_match.url_name }}' == 'login' || '{{ request.resolver_match.url_name }}' == 'signup' || '{{ request.resolver_match.url_name }}' == 'edit_review') {
