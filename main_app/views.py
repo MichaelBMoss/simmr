@@ -4,9 +4,9 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
-from django.db.models import Avg, Count
+from django.db.models import Avg, Count, Q
 from .models import Recipe, Review, Photo
-from .forms import ReviewForm, RecipeCreateForm, RecipeUpdateForm
+from .forms import ReviewForm, RecipeCreateForm, RecipeFilterForm, RecipeUpdateForm
 from django.contrib.auth.models import User
 import uuid, boto3, os, random
 
@@ -17,16 +17,16 @@ import uuid, boto3, os, random
 
 # Create your views here.
 
+recipes_sorted_by_rating = Recipe.objects.annotate(avg_rating=Avg('review__rating')).order_by('-avg_rating')
+recipes_with_ratings = [recipe for recipe in recipes_sorted_by_rating if recipe.avg_rating is not None]
+recipes_without_ratings = [recipe for recipe in recipes_sorted_by_rating if recipe.avg_rating is None]
+all_recipes_by_rating = recipes_with_ratings + recipes_without_ratings
+top_recipes = all_recipes_by_rating[:3]
+
 
 def home(request):
     random_category = random.choice(Recipe.CATEGORY_CHOICES)
     category_recipes = Recipe.objects.filter(category=random_category[0]).order_by('?')[:3]
-
-    recipes_sorted_by_rating = Recipe.objects.annotate(avg_rating=Avg('review__rating')).order_by('-avg_rating')
-    recipes_with_ratings = [recipe for recipe in recipes_sorted_by_rating if recipe.avg_rating is not None]
-    recipes_without_ratings = [recipe for recipe in recipes_sorted_by_rating if recipe.avg_rating is None]
-    combined_recipes = recipes_with_ratings + recipes_without_ratings
-    top_recipes = combined_recipes[:3]
 
     random_appliance = random.choice(Recipe.APPLIANCE_CHOICES)
     appliance_recipes = Recipe.objects.filter(appliance=random_appliance[0]).order_by('?')[:3]
@@ -171,13 +171,33 @@ class RecipeUpdateView(UpdateView):
 
 class RecipesListView(ListView):
     model = Recipe
+    template_name = 'main_app/recipe_list.html'
+    context_object_name = 'recipe_list'
+    form_class = RecipeFilterForm
+
+    def get_queryset(self):
+        filter_choice = self.request.GET.get('filter_choice')
+        queryset = Recipe.objects.all()
+
+        if filter_choice == 'ByRating':
+            # If the user selects "By Rating," return the top_recipes queryset
+            return all_recipes_by_rating
+        elif filter_choice and filter_choice != 'All':
+            queryset = queryset.filter(
+                Q(category=filter_choice) | Q(appliance=filter_choice)
+            )
+
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        for recipe in Recipe.objects.all():
-            reviews_info = recipe.review_set.aggregate(avg_rating=Avg('rating'), total_reviews=Count('id'))
+        for recipe in context['recipe_list']:
+            reviews_info = recipe.review_set.aggregate(
+                avg_rating=Avg('rating'), total_reviews=Count('id')
+            )
             recipe.avg_rating = reviews_info['avg_rating']
             recipe.total_reviews = reviews_info['total_reviews']
+        context['form'] = self.form_class(self.request.GET)
 
         return context
 

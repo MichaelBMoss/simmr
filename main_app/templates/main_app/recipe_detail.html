@@ -16,7 +16,7 @@
       {{ recipe.name }}
     </h2>
     <div class="detail-author">
-      Recipe by <a href="{% url 'profile' recipe.author %}">{{ recipe.author }}</a>
+      Recipe by <a class="author-link" href="{% url 'profile' recipe.author %}">{{ recipe.author }}</a>
     </div>
     <div class="detail-rating">
       <img class="detail-view-star" src="{% static 'main_app/images/star-red.png' %}" alt="rating-star">

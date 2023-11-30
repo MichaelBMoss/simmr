@@ -28,30 +28,37 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item mx-2">
-                        <a class="nav-link" href="{% url 'home' %}">HOME<span class="sr-only">(current)</span></a>
+                        <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}"
+                            href="{% url 'home' %}">HOME<span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item mx-2">
-                        <a class="nav-link" href="{% url 'about' %}">ABOUT</a>
+                        <a class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}"
+                            href="{% url 'about' %}">ABOUT</a>
                     </li>
                     <li class="nav-item mx-2">
-                        <a class="nav-link" href="{% url 'recipes_create' %}">ADD RECIPE</a>
+                        <a class="nav-link {% if request.resolver_match.url_name == 'recipes_create' %}active{% endif %}"
+                            href="{% url 'recipes_create' %}">ADD RECIPE</a>
                     </li>
                     <li class="nav-item mx-2">
-                        <a class="nav-link" href="{% url 'recipes_list' %}">ALL RECIPES</a>
+                        <a class="nav-link {% if request.resolver_match.url_name == 'recipes_list' %}active{% endif %}"
+                            href="{% url 'recipes_list' %}">ALL RECIPES</a>
                     </li>
                     {% if user.is_authenticated %}
                     <li class="nav-item mx-2">
-                        <a class="nav-link" href="{% url 'profile' user.username %}">MY PROFILE</a>
+                        <a class="nav-link {% if request.resolver_match.url_name == 'profile' %}active{% endif %}"
+                            href="{% url 'profile' user.username %}">MY PROFILE</a>
                     </li>
                     <li class="nav-item mx-2">
                         <a class="nav-link" href="{% url 'logout' %}">LOG OUT</a>
                     </li>
                     {% else %}
                     <li class="nav-item mx-2">
-                        <a class="nav-link" href="{% url 'signup' %}">SIGN UP</a>
+                        <a class="nav-link {% if request.resolver_match.url_name == 'signup' %}active{% endif %}"
+                            href="{% url 'signup' %}">SIGN UP</a>
                     </li>
                     <li class="nav-item mx-2">
-                        <a class="nav-link" href="{% url 'login' %}">LOG IN</a>
+                        <a class="nav-link {% if request.resolver_match.url_name == 'login' %}active{% endif %}"
+                            href="{% url 'login' %}">LOG IN</a>
                     </li>
                     {% endif %}
                 </ul>
@@ -64,8 +71,18 @@
     </main>
     <br><br><br>
     <footer class="card-footer text-muted">
-        <div>All Rights Reserved, &copy; 2023 Simmr &nbsp;</div>
+        <a class="site-credits" href="{% url 'about' %}">Site Credits</a>
+        <span>All Rights Reserved, &copy; 2023 Simmr &nbsp;</span>
     </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+        if ('{{ request.resolver_match.url_name }}' == 'recipes_delete' || '{{ request.resolver_match.url_name }}' == 'profile' || '{{ request.resolver_match.url_name }}' == 'login' || '{{ request.resolver_match.url_name }}' == 'signup') {
+            let footerEl = document.querySelector('footer')
+            footerEl.classList.add('fixed-bottom')
+        }
+    });
+        
+    </script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
