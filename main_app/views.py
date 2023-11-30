@@ -6,7 +6,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
 from django.db.models import Avg, Count
 from .models import Recipe, Review, Photo
-from .forms import ReviewForm, RecipeCreateForm
+from .forms import ReviewForm, RecipeCreateForm, RecipeUpdateForm
 from django.contrib.auth.models import User
 import uuid, boto3, os, random
 
@@ -102,7 +102,6 @@ def bookmark_recipe(request, recipe_id):
     return redirect('recipe_detail', pk=recipe_id)
 
 
-
 class RecipeCreateView(CreateView):
     model = Recipe
     form_class = RecipeCreateForm
@@ -122,6 +121,32 @@ class RecipeCreateView(CreateView):
                 s3.upload_fileobj(photo_file, bucket, key)
                 url = f"{os.environ['S3_BASE_URL']}{bucket}/{key}"
 
+                Photo.objects.create(url=url, recipe=recipe)
+            except Exception as e:
+                print('An error occurred uploading file to S3')
+                print(e)
+
+        return super().form_valid(form)
+
+
+class RecipeUpdateView(UpdateView):
+    model = Recipe
+    form_class = RecipeUpdateForm
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        recipe = form.save()
+
+        photo_file = self.request.FILES.get('photo', None)
+        if photo_file:
+            s3 = boto3.client('s3')
+            key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+            try:
+                bucket = os.environ['S3_BUCKET']
+                s3.upload_fileobj(photo_file, bucket, key)
+                url = f"{os.environ['S3_BASE_URL']}{bucket}/{key}"
+                existing_photos = Photo.objects.filter(recipe=recipe)
+                existing_photos.delete()
                 Photo.objects.create(url=url, recipe=recipe)
             except Exception as e:
                 print('An error occurred uploading file to S3')
@@ -160,11 +185,6 @@ class RecipeDetailView(DetailView):
         context['photo'] = photo
         
         return context
-
-
-class RecipeUpdateView(UpdateView):
-  model = Recipe
-  fields = ['name', 'category', 'appliance', 'description', 'time', 'servings', 'ingredients', 'directions',]
 
 
 class RecipeDeleteView(DeleteView):

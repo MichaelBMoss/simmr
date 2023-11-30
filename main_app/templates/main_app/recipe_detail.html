@@ -8,7 +8,7 @@
 <!-- NOTE: This is the hero container -->
 <div class="container detail-main-container">
   <div class="detail-left">
-    <div class="detail-cat-app">
+    <div class="detail-recipe-qualities-div">
       <span class="detail-category">{{ recipe.category }}</span>
       <span class="detail-appliance">{{ recipe.appliance }}</span>
     </div>
@@ -183,7 +183,7 @@
     }
 
     let addReviewBtn = document.querySelector('.add-review-btn');
-    let hiddenReviewForm = document.querySelector('.hidden');
+    let hiddenReviewForm = document.querySelector('.visible');
   
     if (addReviewBtn && hiddenReviewForm) {
       addReviewBtn.addEventListener('click', function () {
