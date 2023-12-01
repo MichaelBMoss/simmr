@@ -13,6 +13,7 @@ class Recipe(models.Model):
         ('Lunch', 'Lunch'),
         ('Dinner', 'Dinner'),
         ('Snack', 'Snack'),
+        ('Sweets', 'Sweets'),
     ]
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, null=True)
     APPLIANCE_CHOICES = [

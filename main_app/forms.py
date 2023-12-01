@@ -37,6 +37,7 @@ class RecipeFilterForm(forms.Form):
             ('Lunch', 'Lunch'),
             ('Dinner', 'Dinner'),
             ('Snack', 'Snack'),
+            ('Sweets', 'Sweets'),
         ]),
         ('Filter By Appliance', [
             ('Air Fryer', 'Air Fryer'),

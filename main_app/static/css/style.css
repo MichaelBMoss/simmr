@@ -9,6 +9,10 @@ body {
     font-size: 14px;
 }
 
+.review-div {
+    margin-bottom: 300px;
+}
+
 label[for=id_time] > em {
     font-size: 0.8rem;
     font-weight: 400;
