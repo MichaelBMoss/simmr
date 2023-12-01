@@ -652,8 +652,9 @@ input[type=text], input[type=number], input[type=password] {
         width: 90%;
         height: 90%;
         max-width: 90%;
-        background-color: aqua;
+        background-color: transparent;
     }
+    
     .detail-image-offset-bkg {
         width: 90%;
     }
