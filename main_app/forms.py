@@ -14,22 +14,23 @@ class RecipeCreateForm(forms.ModelForm):
         model = Recipe
         fields = ['name', 'category', 'appliance', 'description', 'time', 'servings', 'ingredients', 'directions']
 
+    # Additional field definitions with specific requirements.
     name = forms.CharField(required=True)
     category = forms.ChoiceField(choices=Recipe.CATEGORY_CHOICES, required=True)
     description = forms.CharField(required=True, widget=forms.Textarea)
     ingredients = forms.CharField(required=True, widget=forms.Textarea)
     directions = forms.CharField(required=True, widget=forms.Textarea)
-    photo = forms.ImageField(required=True)
+    photo = forms.ImageField(required=True) # Adding photo field to form though photo is not part of the recipe model allows us to send photo from the photo form to the photo model
 
-
+# Form for the filter button on the all recipes page
 class RecipeFilterForm(forms.Form):
     CATEGORY_CHOICES = Recipe.CATEGORY_CHOICES
     APPLIANCE_CHOICES = Recipe.APPLIANCE_CHOICES
 
-    # Create choices with modified labels
+    # Create choices with modified labels to categorize filter options.
     combined_choices = [
         ('Filter Options', [
-            ('All', 'All'),  # 'All' included within the "Filter Options" section
+            ('All', 'All'), 
             ('ByRating', 'By Rating'),
         ]),
         ('Filter By Category', [
