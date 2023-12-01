@@ -57,4 +57,36 @@
     {% endfor %}
 </div>
 
+<!-- JavaScript to dynamically adjust the class of the food photo based on its aspect ratio -->
+<script>
+    document.addEventListener('DOMContentLoaded', function (){
+      let image = document.getElementById('food-photo')
+      const aspectRatio = image.width / image.height
+      if (aspectRatio > 1.3) {
+        image.classList.add('detail-image-landscape')
+      } else {
+        image.classList.add('detail-image-portrait')
+      }
+    })
+    </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const urlName = '{{ request.resolver_match.url_name }}';
+      const authorListLength = '{{ authored_recipes|length }}';
+      const bookmarkListLength = '{{ bookmarked_recipes|length }}';
+  
+      if (urlName === 'profile' && authorListLength < 4 && bookmarkListLength == 0) {
+        let footerEl = document.querySelector('footer');
+        footerEl.classList.add('fixed-bottom');
+      } else if (urlName === 'profile' && authorListLength == 0 && bookmarkListLength < 4) {
+        let footerEl = document.querySelector('footer');
+        footerEl.classList.add('fixed-bottom');
+    } else if (urlName === 'profile' && authorListLength == 0 && bookmarkListLength == 0){
+        let footerEl = document.querySelector('footer');
+        footerEl.classList.add('fixed-bottom');
+      }
+    });
+  </script>
+
 {% endblock %}
