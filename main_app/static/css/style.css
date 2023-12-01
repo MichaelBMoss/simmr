@@ -8,6 +8,10 @@ body {
     box-sizing: border-box;
     font-size: 14px;
 }
+ 
+main {
+    text-wrap: wrap;
+}
 
 .review-div {
     margin-bottom: 300px;
@@ -27,6 +31,7 @@ textarea {
 pre {
     font-family: 'Inter', 'Helvetica', sans-serif;
     text-wrap: wrap;
+    white-space: pre-wrap;
 }
 
 
@@ -638,15 +643,18 @@ input[type=text], input[type=number], input[type=password] {
     }
 
     .detail-right {
-        height: 100vw;
-        width: 100vw;
+        height: calc(width*0.8);
+        width: 60%;
+        min-width: 350px;
+        align-self: center;
     }
     .detail-image-container{
         width: 90%;
         height: 90%;
         max-width: 90%;
-        background-color: aqua;
+        background-color: transparent;
     }
+    
     .detail-image-offset-bkg {
         width: 90%;
     }
