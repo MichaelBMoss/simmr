@@ -603,7 +603,7 @@ input[type=text], input[type=number], input[type=password] {
 
     .detail-appliance {
         height: 20px;
-        width: 50px;
+        width: fit-content;
         font-size: 0.6rem;
         font-weight: 700;
         padding: 10px 30px;
