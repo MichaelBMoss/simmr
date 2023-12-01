@@ -544,6 +544,14 @@ input[type=text], input[type=number], input[type=password] {
     color: #ff9807;
 }
 
+.review-user { 
+    color: black;
+}
+
+.review-user:hover { 
+    color: #FFA629;
+}
+
 
 @media (min-width: 992px) {
     .card {
@@ -654,7 +662,7 @@ input[type=text], input[type=number], input[type=password] {
         max-width: 90%;
         background-color: transparent;
     }
-    
+
     .detail-image-offset-bkg {
         width: 90%;
     }

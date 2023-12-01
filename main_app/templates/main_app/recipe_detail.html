@@ -119,7 +119,7 @@
     {% for review in recipe.review_set.all %}
     <div>
       <!-- user -->
-      <a href="{% url 'profile' review.user %}"><h4 class="review-user author-link">{{ review.user }}</h4></a>
+      <h4><a class="review-user" href="{% url 'profile' review.user %}">{{ review.user }}</a></h4>
       <!-- rating -->
       <div class="my-1">
         {% if review.rating == 5 %}
