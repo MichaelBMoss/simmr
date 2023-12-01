@@ -42,5 +42,11 @@ Recipe Detail:
 ![Wireframe](main_app/static/main_app/images/wireframe.png)
 
 ## Next Steps
-
-
+- Profile Page
+    - Picture Upload
+    - About Me
+    - "Friends"/"Followers"
+- Photos
+    - Many photos on a recipe 
+    - Upload photo with a review 
+- Search feature to find recipes easier 
