@@ -11,23 +11,24 @@
 
 <div class="container container-home">
     {% for recipe in authored_recipes %}
-        <div class="card">
-            <a class="recipe-card-link" href="{% url 'recipe_detail' recipe.id %}">
-                <div class="image-container">
-                    <img id="image" class="list-view-image" src="{{ recipe.photo_set.first.url }}">
-                </div>
-                <span class="card-category">{{ recipe.category }}</span>
-                <h4 class="card-title">{{ recipe.name }}</h4>
-                <div class="rating">
-                    <img class="list-view-star" src="{% static 'main_app/images/star-red.png' %}" alt="rating-star">
-                    {% if recipe.total_reviews %}
-                    <span class="list-view-rating">{{ recipe.average_rating|floatformat:1 }} ({{ recipe.total_reviews }})</span>
-                    {% else %}
-                    <span class="list-view-rating">No Reviews Yet</span>
-                    {% endif %}
-                </div>
-            </a>
-        </div>
+    <div class="card">
+        <a class="recipe-card-link" href="{% url 'recipe_detail' recipe.id %}">
+            <div class="image-container">
+                <img id="image" class="list-view-image" src="{{ recipe.photo_set.first.url }}">
+            </div>
+            <span class="card-category">{{ recipe.category }}</span>
+            <h4 class="card-title">{{ recipe.name }}</h4>
+            <div class="rating">
+                <img class="list-view-star" src="{% static 'main_app/images/star-red.png' %}" alt="rating-star">
+                {% if recipe.total_reviews %}
+                <span class="list-view-rating">{{ recipe.average_rating|floatformat:1 }} ({{ recipe.total_reviews
+                    }})</span>
+                {% else %}
+                <span class="list-view-rating">No Reviews Yet</span>
+                {% endif %}
+            </div>
+        </a>
+    </div>
     {% endfor %}
 </div>
 
@@ -37,56 +38,57 @@
 
 <div class="container container-home">
     {% for recipe in bookmarked_recipes %}
-        <div class="card">
-            <a class="recipe-card-link" href="{% url 'recipe_detail' recipe.id %}">
-                <div class="image-container">
-                    <img id="image" class="list-view-image" src="{{ recipe.photo_set.first.url }}">
-                </div>
-                <span class="card-category">{{ recipe.category }}</span>
-                <h4 class="card-title">{{ recipe.name }}</h4>
-                <div class="rating">
-                    <img class="list-view-star" src="{% static 'main_app/images/star-red.png' %}" alt="rating-star">
-                    {% if recipe.total_reviews %}
-                    <span class="list-view-rating">{{ recipe.average_rating|floatformat:1 }} ({{ recipe.total_reviews }})</span>
-                    {% else %}
-                    <span class="list-view-rating">No Reviews Yet</span>
-                    {% endif %}
-                </div>
-            </a>
-        </div>
+    <div class="card">
+        <a class="recipe-card-link" href="{% url 'recipe_detail' recipe.id %}">
+            <div class="image-container">
+                <img id="image" class="list-view-image" src="{{ recipe.photo_set.first.url }}">
+            </div>
+            <span class="card-category">{{ recipe.category }}</span>
+            <h4 class="card-title">{{ recipe.name }}</h4>
+            <div class="rating">
+                <img class="list-view-star" src="{% static 'main_app/images/star-red.png' %}" alt="rating-star">
+                {% if recipe.total_reviews %}
+                <span class="list-view-rating">{{ recipe.average_rating|floatformat:1 }} ({{ recipe.total_reviews
+                    }})</span>
+                {% else %}
+                <span class="list-view-rating">No Reviews Yet</span>
+                {% endif %}
+            </div>
+        </a>
+    </div>
     {% endfor %}
 </div>
 
 <!-- JavaScript to dynamically adjust the class of the food photo based on its aspect ratio -->
 <script>
-    document.addEventListener('DOMContentLoaded', function (){
-      let image = document.getElementById('food-photo')
-      const aspectRatio = image.width / image.height
-      if (aspectRatio > 1.3) {
-        image.classList.add('detail-image-landscape')
-      } else {
-        image.classList.add('detail-image-portrait')
-      }
+    document.addEventListener('DOMContentLoaded', function () {
+        let image = document.getElementById('food-photo')
+        const aspectRatio = image.width / image.height
+        if (aspectRatio > 1.3) {
+            image.classList.add('detail-image-landscape')
+        } else {
+            image.classList.add('detail-image-portrait')
+        }
     })
-    </script>
+</script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-      const urlName = '{{ request.resolver_match.url_name }}';
-      const authorListLength = '{{ authored_recipes|length }}';
-      const bookmarkListLength = '{{ bookmarked_recipes|length }}';
-  
-      if (urlName === 'profile' && authorListLength < 4 && bookmarkListLength == 0) {
-        let footerEl = document.querySelector('footer');
-        footerEl.classList.add('fixed-bottom');
-      } else if (urlName === 'profile' && authorListLength == 0 && bookmarkListLength < 4) {
-        let footerEl = document.querySelector('footer');
-        footerEl.classList.add('fixed-bottom');
-    } else if (urlName === 'profile' && authorListLength == 0 && bookmarkListLength == 0){
-        let footerEl = document.querySelector('footer');
-        footerEl.classList.add('fixed-bottom');
-      }
+        const urlName = '{{ request.resolver_match.url_name }}';
+        const authorListLength = '{{ authored_recipes|length }}';
+        const bookmarkListLength = '{{ bookmarked_recipes|length }}';
+
+        if (urlName === 'profile' && authorListLength < 4 && bookmarkListLength == 0) {
+            let footerEl = document.querySelector('footer');
+            footerEl.classList.add('fixed-bottom');
+        } else if (urlName === 'profile' && authorListLength == 0 && bookmarkListLength < 4) {
+            let footerEl = document.querySelector('footer');
+            footerEl.classList.add('fixed-bottom');
+        } else if (urlName === 'profile' && authorListLength == 0 && bookmarkListLength == 0) {
+            let footerEl = document.querySelector('footer');
+            footerEl.classList.add('fixed-bottom');
+        }
     });
-  </script>
+</script>
 
 {% endblock %}

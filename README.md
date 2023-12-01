@@ -36,7 +36,8 @@ Recipe Detail:
 ### Planning Materials
 
 [Trello Board for Project Planning](https://trello.com/b/Ekzu1vwm/sei-recipesuserstories)
-[Pitch Deck for Simmr](https://www.figma.com/file/xVUhb7z5eauyg9qgCkUQgT/Project-Three---ERD-and-Wireframe?type=whiteboard&node-id=0-1&t=MUBsavhcemurAVlO-0)
+
+[ERD & Wireframe](https://www.figma.com/file/xVUhb7z5eauyg9qgCkUQgT/Project-Three---ERD-and-Wireframe?type=whiteboard&node-id=0-1&t=MUBsavhcemurAVlO-0)
 
 ![ERD](main_app/static/main_app/images/erd.png)
 ![Wireframe](main_app/static/main_app/images/wireframe.png)
